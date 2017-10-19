@@ -17,7 +17,7 @@
 
 Скачать образ CentOS Minimal можно на этой странице [https://www.centos.org/download/](https://www.centos.org/download/), устанавливаем ОС.
 
-## Настройка сети в CentOS Minimal
+## Настройка сети
 
 Проверяем интерфейсы
 ```bash
