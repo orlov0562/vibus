@@ -108,7 +108,7 @@ yum remove firewalld
 ```
 Устанавливаем **iptables-service** и добавляем в автозагрузку
 ```bash
-yum install iptables-service
+yum install iptables-services
 systemctl enable iptables
 ```
 Очищаем все правила **iptables**
