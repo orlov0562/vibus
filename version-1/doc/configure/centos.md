@@ -44,9 +44,8 @@ service network restart
 
 Проверяем, что **xx.xx.xx.xx** пингуется с нашего ПК
 
-### Ссылки
-- https://lintut.com/how-to-setup-network-after-rhelcentos-7-minimal-installation/
-- https://lintut.com/how-to-configure-static-ip-address-on-centos-7/
+Если надо настроить статические ip (т.е. нет в сети dhcp), то читаем инструкцию [тут](https://lintut.com/how-to-configure-static-ip-address-on-centos-7/)
+
 
 ## SSH
 По-умолчанию ssh server уже установлен, поэтому для удобства и сходства с установкой на VPS, заходим в систему через SSH (например через терминал, PAC или Putty)
