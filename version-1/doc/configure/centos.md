@@ -121,13 +121,12 @@ iptables -t mangle -F
 iptables -F
 iptables -X
 ```
+Проверяем, что все правила удалены
+```bash
+iptables --line -vnL
+```
 Разрешаем входящие соединения только на порты 21,22,80,443
 ```bash
-# Setting default policies:
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
-
 # Exceptions to default policy
 iptables -A INPUT -p tcp --dport 21 -j ACCEPT       # FTP
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT       # SSH
@@ -138,6 +137,11 @@ iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Setting default policies:
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
 ```
 
 Проверяем, что все правила верны
