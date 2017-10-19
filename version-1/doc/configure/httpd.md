@@ -60,7 +60,7 @@ Group apache
     DirectoryIndex index.html
 </IfModule>
 
-<Files ".*">
+<Files ".ht*">
     Require all denied
 </Files>
 
@@ -99,7 +99,7 @@ EnableSendfile on
 
 IncludeOptional /opt/vibus/httpd/conf/*.conf
 ```
-!! не забудьте поменять xx.xx.xx.xx на ваш ip адрес
+!! не забудьте, при необходимости, поменять xx.xx.xx.xx на ваш ip адрес
 
 создаем симлинк на наш конфиг в папку **/etc/httpd/conf**
 ```bash
