@@ -3,7 +3,7 @@
 Обсудить можно тут: http://forum.it-rem.ru
 
 ## Набор устанавливаемого ПО
-- CentOS Minimal
+- CentOS 7 Minimal
 - NGINX
 - HTTPD
 - PHP-FPM (PHP 7.2+)
