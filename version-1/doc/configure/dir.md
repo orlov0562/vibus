@@ -4,22 +4,16 @@
 mkdir -p /opt/vibus/httpd/conf
 mkdir -p /opt/vibus/nginx/conf
 mkdir -p /opt/vibus/mariadb
-mkdir -p /opt/vibus/php-fpm/conf
-mkdir -p /opt/vibus/php-fpm/sock
+mkdir -p /opt/vibus/php-fpm/{conf,sock}
 
-mkdir -p /opt/vibus/site/root/localhost/public_html
-mkdir -p /opt/vibus/site/root/localhost/log/httpd
-mkdir -p /opt/vibus/site/root/localhost/log/nginx
-mkdir -p /opt/vibus/site/root/localhost/log/php-fpm
-mkdir -p /opt/vibus/site/root/localhost/session
-mkdir -p /opt/vibus/site/root/localhost/secret
-mkdir -p /opt/vibus/site/root/localhost/tmp
-mkdir -p /opt/vibus/site/root/localhost/backup/store
-mkdir -p /opt/vibus/site/root/localhost/backup/script
+mkdir -p /opt/vibus/site/root/localhost/{public_html,session,tmp,secret}
+mkdir -p /opt/vibus/site/root/localhost/log/{httpd,nginx,php-fpm}
+mkdir -p /opt/vibus/site/root/localhost/backup/{store,script}
+
 ```
-## Структура организации папок
+## Структура организации папок и файлов
 
-Все помещаем в папку /opt/vibus/* для того, чтобы все было в одном месте, а не разбросано по всей системе. Это не соответствует идеологии организации папок в Linux, но позволяет делать быстрые миграции сайтоы между серверами, обновления пакетов и по минимуму вносить изменения в конфиги устанавливаемых пакетов.
+Все помещаем в папку /opt/vibus/* для того, чтобы все было в одном месте, а не разбросано по всей системе. Это не соответствует идеологии организации папок в Linux, но позволяет делать быстрые миграции сайтов и их конфигураций между серверами, обновления пакетов и по минимуму вносить изменения в конфиги устанавливаемых пакетов.
 
 - /opt/vibus/httpd/
     - /opt/vibus/httpd.conf
@@ -77,14 +71,14 @@ mkdir -p /opt/vibus/site/root/localhost/backup/script
     - /opt/vibus/cmd/site-create.sh
     - /opt/vibus/cmd/site-delete.sh
 
-### Описание организации папок
+### Описание организации папок и файлов
 - /opt/vibus/httpd/
     - /opt/vibus/httpd.conf *= конфигурация httpd*
     - /opt/vibus/httpd/conf/
         - /opt/vibus/httpd/conf/site.com.conf *= конфигурация виртуального хоста*
 
 - /opt/vibus/nginx/
-    - /opt/vibus/nginx.conf *= конфигурация httpd*
+    - /opt/vibus/nginx.conf *= конфигурация nginx*
     - /opt/vibus/nginx/conf/user-site.com.cnf *= конфигурация виртуального хоста*
 
 - /opt/vibus/mariadb/
