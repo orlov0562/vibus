@@ -89,7 +89,7 @@ yum install wget mc htop screen
 ```
 ищем
 ```plain
-SELINUX=permissive
+SELINUX=enforcing
 ```
 меняем на
 ```plain
