@@ -49,3 +49,21 @@ Repo        : remi-php72
 ```bash
 yum install php php-fpm
 ```
+проверяем версию
+```bash
+php -v
+```
+видим, что установлена версия 7.2
+```plain
+PHP 7.2.0RC4 (cli) (built: Oct 10 2017 14:59:39) ( NTS )
+Copyright (c) 1997-2017 The PHP Group
+Zend Engine v3.2.0-dev, Copyright (c) 1998-2017 Zend Technologies
+```
+теперь смотрим доступные модули 
+```plain
+yum search "php72-php-"
+```
+и ставим нужные
+```plain
+yum install php-mcrypt php-mbstring php-intl php-gd php-curl php-mysql php-pdo php-zip php-fileinfo php-xml
+```
