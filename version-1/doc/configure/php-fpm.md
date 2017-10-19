@@ -161,3 +161,12 @@ php_admin_value[upload_tmp_dir] = /opt/vibus/site/root/localhost/tmp
 php_value[session.save_handler] = files
 php_value[session.save_path]    = /opt/vibus/site/root/localhost/session
 ```
+Проверяем конфигурацию на наличие ошибок
+```bash
+php-fpm -t
+```
+добавляем в автозагрузку и запускаем
+```bash
+systemctl enable php-fpm
+systemctl start php-fpm
+```
