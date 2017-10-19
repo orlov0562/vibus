@@ -16,5 +16,5 @@
 - [Nginx](doc/configure/nginx.md)
 - [Httpd (Apache)](doc/configure/httpd.md)
 - [PHP, PHP-FPM](doc/configure/php-fpm.md)
-- [Проверка настройки PHP, PHP-FPM](doc/configure/php-fpm-check.md)
+- [Проверка настройки PHP](doc/configure/check-php.md)
 - [Httpd Vhost](doc/configure/vhost.md)
