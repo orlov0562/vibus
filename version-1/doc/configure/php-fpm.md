@@ -44,8 +44,8 @@ Release     : 1.el7.remi
 Size        : 3.2 M
 Repo        : remi-php72 
 ...
-## Установка PHP и модулей
 ```
+## Установка PHP и модулей
 устанавливаем php и php-fpm
 ```bash
 yum install php php-fpm
