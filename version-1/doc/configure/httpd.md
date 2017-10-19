@@ -107,3 +107,9 @@ ln -s /opt/vibus/httpd/httpd.conf /etc/httpd/conf/
 ```bash
 systemctl start httpd
 ```
+если теперь попытаться зайти по ip адресу **http://xx.xx.xx.xx** вы должны получить ошибку 
+```text
+Forbidden
+You don't have permission to access / on this server.
+```
+это правильно т.к. еще нет настроенных виртуальных хостов
