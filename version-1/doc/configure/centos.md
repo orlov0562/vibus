@@ -138,4 +138,6 @@ iptables --line -vnL
 ```bash
 iptables-service save
 ```
+## Завершение установки
+Перезагружаемся
 
