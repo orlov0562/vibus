@@ -46,7 +46,7 @@ mkdir -p /opt/vibus/site/root/localhost/backup/{store,script}
         - /opt/vibus/site/user/site.com/log/nginx/error.log
     - /opt/vibus/site/user/site.com/log/php-fpm/
         - /opt/vibus/site/user/site.com/log/php-fpm/access.log
-        - /opt/vibus/site/user/site.com/log/php-fpm/error.log
+        - /opt/vibus/site/user/site.com/log/php-fpm/slow.log
 - /opt/vibus/site/user/site.com/tmp/
 - /opt/vibus/site/user/site.com/session/
 - /opt/vibus/site/user/site.com/secret/
