@@ -54,4 +54,9 @@ OPEN_BASEDIR (WRITE TO /tmp/test.txt):
   Warning: file_put_contents(/tmp/test.txt): failed to open stream: Operation not permitted in /opt/vibus/site/root/localhost/public_html/test.php on line 19
 ERR
 ```
-Тут проверяется что сессии имеют доступ в папку сессий; Пользователь от которого выполняется скрипт; Временная папка; Доступ во временную папку; Ограничение скрипта в папках /public_html и /tmp (open_basedir)
+Тут проверяется:
+- что сессии имеют доступ в папку сессий
+- видно пользователя от которого выполняется скрипт
+- видна временная папка
+- проверяется доступ из скрипта во временную папку
+- проверяется open_basedir, ограничение скрипта в папках /public_html и /tmp (скрипт может работать только в этих папках)
