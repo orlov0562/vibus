@@ -170,3 +170,12 @@ php-fpm -t
 systemctl enable php-fpm
 systemctl start php-fpm
 ```
+создаем тестовый файл /opt/vibus/site/root/localhost/public_html/index.php
+```bash
+mcedit /opt/vibus/site/root/localhost/public_html/index.php
+```
+с таким содержимым
+```php
+<?php
+phpinfo();
+```
