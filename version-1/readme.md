@@ -2,10 +2,19 @@
 
 ## Набор устанавливаемого ПО
 - CentOS Minimal
-- nginx
-- httpd
-- php-fpm 7.2
-- mariadb
+- NGINX
+- HTTPD
+- PHP-FPM (PHP 7.2+)
+- MariaDB
+
+## Установка и настройка
+- [CentOS](doc/configure/centos.md)
+- [Структура папок](doc/configure/dir.md)
+- [MariaDB (MySQL)](doc/configure/mariadb.md)
+- [Nginx](doc/configure/nginx.md)
+- [Httpd (Apache)](doc/configure/httpd.md)
+- [PHP, PHP-FPM](doc/configure/php-fpm.md)
+
 
 ## Структура организации папок
 
@@ -127,11 +136,3 @@
 - Пользователь **root**
 - Сайт **localhost**
 - Пример: /opt/vibus/site/**root**/**localhost**/..dirs..
-
-## Установка и настройка
-- [CentOS](doc/configure/centos.md)
-- [Структура папок](doc/configure/dir.md)
-- [MariaDB (MySQL)](doc/configure/mariadb.md)
-- [Nginx](doc/configure/nginx.md)
-- [Httpd (Apache)](doc/configure/httpd.md)
-- [PHP, PHP-FPM](doc/configure/php-fpm.md)
