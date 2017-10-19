@@ -21,6 +21,5 @@ mysql_secure_installation
 ```bash
 yum install bc
 wget http://www.day32.com/MySQL/tuning-primer.sh
-chmod u+x tuning-primer.sh
 bash tuning-primer.sh
 ```
