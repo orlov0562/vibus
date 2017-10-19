@@ -103,17 +103,6 @@ IncludeOptional /opt/vibus/httpd/conf/*.conf
 ```bash
 ln -s /opt/vibus/httpd/httpd.conf /etc/httpd/conf/
 ```
-запускаем httpd
-```bash
-systemctl start httpd
-```
-если теперь попытаться зайти по ip адресу **http://xx.xx.xx.xx** вы должны получить ошибку 
-```text
-Forbidden
-You don't have permission to access / on this server.
-```
-это правильно т.к. еще нет настроенных виртуальных хостов
-
 ## Настройка виртуального хоста по-умолчанию
 
 создаем файл конфигурации виртаульного хоста по-умолчанию
@@ -149,3 +138,26 @@ mcedit /opt/vibus/httpd/conf/root-localhost.conf
 </VirtualHost>
 
 ```
+
+создаем тестовый файл **/opt/vibus/site/root/localhost/public_html/index.html**
+```bash
+mcedit /opt/vibus/site/root/localhost/public_html/index.html
+```
+с таким содержимым
+```html
+<!doctype html>
+<html>
+<head>
+	<title>Hello world!</title>
+</head>
+<body>
+	<h1>Hello world!</h1>
+	<p>The site just created real content comming soon</p>
+</body>
+</html>
+```
+запускаем httpd
+```bash
+systemctl start httpd
+```
+если теперь попытаться зайти по ip адресу **http://xx.xx.xx.xx** вы должны увидеть "Hello world" страницу
