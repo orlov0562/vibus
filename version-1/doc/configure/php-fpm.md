@@ -69,7 +69,7 @@ yum install php-mcrypt php-mbstring php-intl php-gd php-curl php-mysql php-pdo p
 
 ## Настройка PHP-FPM
 
-Описание настроек можно посмотреть тут: (http://php.net/manual/ru/install.fpm.configuration.php)[http://php.net/manual/ru/install.fpm.configuration.php]
+Описание настроек можно посмотреть тут: [http://php.net/manual/ru/install.fpm.configuration.php](http://php.net/manual/ru/install.fpm.configuration.php)
 
 Делаем бэкап основного конфига
 ```bash
@@ -95,7 +95,7 @@ ln -s /opt/vibus/php-fpm/php-fpm.conf /etc/
 
 ## Настройка PHP-FPM пула по-умолчанию
 
-Описание настроек можно посмотреть тут: (http://php.net/manual/ru/install.fpm.configuration.php)[http://php.net/manual/ru/install.fpm.configuration.php]
+Описание настроек можно посмотреть тут: [http://php.net/manual/ru/install.fpm.configuration.php](http://php.net/manual/ru/install.fpm.configuration.php)
 
 создаем файл конфигурации пула по-умолчанию
 ```bash
