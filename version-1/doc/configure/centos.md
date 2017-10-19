@@ -150,7 +150,7 @@ iptables --line -vnL
 ```
 Сохраняем правила, для автозагрузки
 ```bash
-iptables-service save
+service iptables save
 ```
 ## Завершение установки
 Перезагружаемся
