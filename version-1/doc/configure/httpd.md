@@ -1,7 +1,7 @@
 # Vibus, версия 1
 ## Установка и настройка Httpd (Apache)
 
-Устанавливаем apache
+Устанавливаем httpd
 ```bash
 yum install httpd
 ```
@@ -19,10 +19,6 @@ systemctl status httpd
 ```
 заходим по ip адресу **http://xx.xx.xx.xx**, и убеждаемся что веб-сервер заработал
 
-делаем резервную копию **/etc/httpd/conf/httpd.conf**
-```bash
-cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
-```
 создаем наш конфиг /opt/vibus/httpd/httpd.conf
 ```bash
 mcedit /opt/vibus/httpd/httpd.conf
@@ -38,16 +34,11 @@ IncludeOptional /opt/vibus/httpd/conf/*.conf
 ```
 !! не забудьте поменять xx.xx.xx.xx на ваш ip адрес
 
-добавляем в конец **/etc/httpd/conf/httpd.conf** подключение нашего конфига
+создаем симлинк на наш конфиг в папку **/etc/httpd/conf.d**
 ```bash
-mcedit /etc/httpd/conf/httpd.conf
+ln -s /opt/vibus/httpd/httpd.conf /etc/httpd/conf.d/
 ```
-и в конец
-```plain
-...
-IncludeOptional /opt/vibus/httpd/httpd.conf
-```
-перезапускаем 
+перезапускаем httpd
 ```bash
 systemctl restart httpd
 ```
