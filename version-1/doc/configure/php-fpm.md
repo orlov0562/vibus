@@ -139,8 +139,14 @@ catch_workers_output = yes
 security.limit_extensions = .php
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; PHP configuration
+; PHP & ENV configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+env[HOME] = /opt/vibus/site/root/localhost
+env[PATH] = /usr/local/bin:/usr/bin:/bin
+env[TMP] = /opt/vibus/site/root/localhost/tmp
+env[TMPDIR] = /opt/vibus/site/root/localhost/tmp
+env[TEMP] = /opt/vibus/site/root/localhost/tmp
 
 php_admin_value[open_basedir] = /opt/vibus/site/root/localhost/public_html/
 
