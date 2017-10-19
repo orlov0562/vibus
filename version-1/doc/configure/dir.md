@@ -1,6 +1,22 @@
 # Vibus, версия 1
 ## Создание структуры папок
+```bash
+mkdir -p /opt/vibus/httpd/conf
+mkdir -p /opt/vibus/nginx/conf
+mkdir -p /opt/vibus/mariadb
+mkdir -p /opt/vibus/php-fpm/conf
+mkdir -p /opt/vibus/php-fpm/sock
 
+mkdir -p /opt/vibus/site/root/localhost/public_html
+mkdir -p /opt/vibus/site/root/localhost/log/httpd
+mkdir -p /opt/vibus/site/root/localhost/log/nginx
+mkdir -p /opt/vibus/site/root/localhost/log/php-fpm
+mkdir -p /opt/vibus/site/root/localhost/session
+mkdir -p /opt/vibus/site/root/localhost/secret
+mkdir -p /opt/vibus/site/root/localhost/tmp
+mkdir -p /opt/vibus/site/root/localhost/backup/store
+mkdir -p /opt/vibus/site/root/localhost/backup/script
+```
 ## Структура организации папок
 
 Все помещаем в папку /opt/vibus/* для того, чтобы все было в одном месте, а не разбросано по всей системе. Это не соответствует идеологии организации папок в Linux, но позволяет делать быстрые миграции сайтоы между серверами, обновления пакетов и по минимуму вносить изменения в конфиги устанавливаемых пакетов.
@@ -36,6 +52,7 @@
         - /opt/vibus/site/user/site.com/log/php-fpm/access.log
         - /opt/vibus/site/user/site.com/log/php-fpm/error.log
 - /opt/vibus/site/user/site.com/tmp/
+- /opt/vibus/site/user/site.com/session/
 - /opt/vibus/site/user/site.com/secret/
     - /opt/vibus/site/user/site.com/secret/.passwd
 - /opt/vibus/site/user/site.com/backup/
@@ -93,6 +110,7 @@
             - /opt/vibus/site/user/site.com/log/php-fpm/access.log
             - /opt/vibus/site/user/site.com/log/php-fpm/error.log
     - /opt/vibus/site/user/site.com/tmp/ *= временная папка*
+    - /opt/vibus/site/user/site.com/session/ *= папка сессий*
     - /opt/vibus/site/user/site.com/secret/ *= папка для доп. конфигураций*
         - /opt/vibus/site/user/site.com/secret/.passwd
     - /opt/vibus/site/user/site.com/backup/ *= папка для бэкапов*
