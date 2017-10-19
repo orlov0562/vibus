@@ -2,11 +2,14 @@
 
 ## Набор устанавливаемого ПО
 - CentOS Minimal
+- nginx
 - httpd
 - php-fpm 7.2
 - mariadb
 
 ## Структура организации папок
+
+Все помещаем в папку /opt/vibus/* для того, чтобы все было в одном месте, а не разбросано по всей системе. Это не соответствует идеологии организации папок в Linux, но позволяет делать быстрые миграции сайтоы между серверами, обновления пакетов и по минимуму вносить изменения в конфиги устанавливаемых пакетов.
 
 - /opt/vibus/httpd/
     - /opt/vibus/httpd.conf
@@ -67,3 +70,11 @@
 - Пользователь root
 - Сайт localhost
 - Пример: /opt/vibus/site/root/localhost/..dirs..
+
+## Установка и настройка
+- [CentOS](doc/configure/centos.md)
+- [Структура папок](doc/configure/dir.md)
+- [MariaDB (MySQL)](doc/configure/mariadb.md)
+- Nginx
+- [Httpd (Apache)](doc/configure/httpd.md)
+- [PHP, PHP-FPM](doc/configure/php-fpm.md)
