@@ -1,6 +1,6 @@
 # Vibus, версия 1
 ## Проверка настройки PHP 
-Создайте файл /opt/vibus/site/root/localhost/public_html/test.php
+Создайте файл **/opt/vibus/site/root/localhost/public_html/test.php**
 ```bash
 mcedit /opt/vibus/site/root/localhost/public_html/test.php
 ```
