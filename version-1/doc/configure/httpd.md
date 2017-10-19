@@ -113,3 +113,39 @@ Forbidden
 You don't have permission to access / on this server.
 ```
 это правильно т.к. еще нет настроенных виртуальных хостов
+
+## Настройка виртуального хоста по-умолчанию
+
+создаем файл конфигурации виртаульного хоста по-умолчанию
+```bash
+mcedit /opt/vibus/httpd/conf/root-localhost.conf
+```
+с таким содержимым
+```plain
+<VirtualHost *:80>
+
+    ServerName localhost
+    ServerAlias www.localhost
+
+    DocumentRoot /opt/vibus/site/root/localhost/public_html
+
+    DirectoryIndex index.php index.html
+
+    <Directory /opt/vibus/site/root/localhost/public_html>
+        Options -Indexes +FollowSymLinks +MultiViews
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    <FilesMatch \.php$>
+	    SetHandler "proxy:unix:/opt/vibus/php-fpm/sock/root-localhost.sock|fcgi://localhost"
+    </FilesMatch>
+
+    ErrorLog  /opt/vibus/site/root/localhost/log/httpd/error.log
+    LogLevel warn
+
+    CustomLog /opt/vibus/site/root/localhost/log/httpd/access.log combined
+
+</VirtualHost>
+
+```
