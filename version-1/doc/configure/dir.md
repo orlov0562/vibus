@@ -33,6 +33,8 @@ mkdir -p /opt/vibus/site/root/localhost/backup/{store,script}
         - /opt/vibus/php-fpm/conf/user-site.com.conf
     - /opt/vibus/php-fpm/sock/
         - /opt/vibus/php-fpm/sock/user-site.com.sock
+    - /opt/vibus/php-fpm/log/
+        - /opt/vibus/php-fpm/log/error.log
 
 - /opt/vibus/site/user/site.com/public_html/
 - /opt/vibus/site/user/site.com/log/
