@@ -1,2 +1,142 @@
 # Vibus, версия 1
+
 ## Установка и настройка CentOS
+
+Я буду писать настройку на основе установки минимального образа в VirtualBox. Если Вы производите настройку на VPS, Dedicated сервере, то пункты по установке, настройке сети можно пропустить и сразу переходить к конфигурации
+
+## Настройка VirtualBox
+- Создаем виртуальную машину.
+- Настраиваем второй сетевой интерфейс (первый уже должен быть настроен в режиме NAT), чтобы машина появилась в вашей сети
+  - заходим в Settings виртуальной машины
+  - переходим в раздел Network, вкладка Adapter 2
+    - Включаем [x] Enable Network Adapter
+    - Attached to: Bridged Adapter
+  - сохраняемся
+
+## CentOS Minimal
+
+Скачать образ CentOS Minimal можно на этой странице [https://www.centos.org/download/](https://www.centos.org/download/), устанавливаем ОС.
+
+## Настройка сети в CentOS Minimal
+
+По-умолчанию сеть не настроена. Для того, чтобы настроить выполняем:
+
+```bash
+nmtui
+```
+в появившемся окне:
+- выбираем Edit connection
+- выбираем интерфейс
+- ставим галку напротив [x] Automatically connect
+- нажимаем Done, Back, повторяем для всех интерфейсов
+- Quit
+
+Перезапускаем сеть
+```bash
+service network restart
+```
+
+Проверяем что интерфейсы получили ip по dhcp
+```bash
+service network restart
+```
+Запоминаем ip второго интерфейса, везде дальше, я буду обозначать этот ip как **xx.xx.xx.xx**
+
+Проверяем, что **xx.xx.xx.xx** пингуется с нашего ПК
+
+### Ссылки
+- https://lintut.com/how-to-setup-network-after-rhelcentos-7-minimal-installation/
+- https://lintut.com/how-to-configure-static-ip-address-on-centos-7/
+
+## SSH
+По-умолчанию ssh server уже установлен, поэтому для удобства и сходства с установкой на VPS, заходим в систему через SSH (например через терминал, PAC или Putty)
+
+## Настройка репозиториев и обновление ПО
+
+Для использования свежего PHP, добавляем Remi репозиторий
+
+```bash
+yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+```
+
+обновляемся
+
+```bash
+yum upgrade
+```
+
+## Установка базового ПО
+Устанавливаем ПО, которое Вы постоянно используете (у вас может быть другой список)
+```bash
+yum install wget mc htop screen
+```
+
+## Настраиваем SELinux
+В этом мануале я отключаю его полностью.
+
+Открываем **/etc/sysconfig/selinux**
+```bash
+# mcedit /etc/sysconfig/selinux
+```
+ищем
+```plain
+SELINUX=permissive
+```
+меняем на
+```plain
+SELINUX=disabled
+```
+сохраняемся, перезагружаемся
+
+## Настраиваем iptables
+По-умолчанию используется **firewalld**, я предпочитаю использовать **iptables** напрямую. 
+
+Останавливаем, выключаем из автозагрузки и удаляем **firewalld**
+```bash
+systemctl stop firewalld
+systemctl disable firewalld
+yum remove firewalld
+```
+Устанавливаем **iptables-service** и добавляем в автозагрузку
+```bash
+yum install iptables-service
+systemctl enable iptables
+```
+Очищаем все правила **iptables**
+```bash
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -t nat -F
+iptables -t mangle -F
+iptables -F
+iptables -X
+```
+Разрешаем входящие соединения только на порты 21,22,80,443
+```bash
+# Setting default policies:
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# Exceptions to default policy
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT       # FTP
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT       # SSH
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT       # HTTP
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT      # HTTPS
+
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+```
+
+Проверяем, что все правила верны
+```bash
+iptables --line -vnL
+```
+Сохраняем правила, для автозагрузки
+```bash
+iptables-service save
+```
+
