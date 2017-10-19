@@ -21,7 +21,7 @@ systemctl status httpd
 
 делаем резервную копию **/etc/httpd/conf/httpd.conf**
 ```bash
-cp в /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
+cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
 ```
 создаем наш конфиг /opt/vibus/httpd/httpd.conf
 ```bash
