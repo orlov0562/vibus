@@ -67,4 +67,97 @@ yum search "php72-php-"
 yum install php-mcrypt php-mbstring php-intl php-gd php-curl php-mysql php-pdo php-zip php-fileinfo php-xml
 ```
 
-## Настрйока PHP=FPM
+## Настройка PHP-FPM
+
+Описание настроек можно посмотреть тут: (http://php.net/manual/ru/install.fpm.configuration.php)[http://php.net/manual/ru/install.fpm.configuration.php]
+
+Делаем бэкап основного конфига
+```bash
+mv /etc/php-fpm.conf /etc/php-fpm.conf.orig
+```
+
+Создаем наш конфиг **/opt/vibus/php-fpm/php-fpm.conf**
+```bash
+mcedit /opt/vibus/php-fpm/php-fpm.conf
+```
+с таким содержимым
+```plain
+include=/opt/vibus/php-fpm/conf/*.conf
+
+[global]
+error_log = /opt/vibus/php-fpm/log/error.log
+daemonize = yes
+```
+создаем симлинк на наш конфиг в папку /etc/httpd/conf
+```bash
+ln -s /opt/vibus/php-fpm/php-fpm.conf /etc/
+```
+
+## Настройка PHP-FPM пула по-умолчанию
+
+Описание настроек можно посмотреть тут: (http://php.net/manual/ru/install.fpm.configuration.php)[http://php.net/manual/ru/install.fpm.configuration.php]
+
+создаем файл конфигурации пула по-умолчанию
+```bash
+mcedit /opt/vibus/php-fpm/conf/root-localhost.conf
+```
+с таким содержимым
+```plain
+[root-localhost]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Pool configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+user = apache
+group = apache
+
+listen = /opt/vibus/php-fpm/sock/root-localhost.sock
+
+listen.owner = apache
+listen.group = apache
+listen.mode = 0600
+
+; The value can vary from -19 (highest priority) to 20 (lower priority)
+; process.priority = -19
+
+pm = dynamic
+pm.max_children = 50
+pm.start_servers = 5
+pm.min_spare_servers = 5
+pm.max_spare_servers = 35
+
+access.log = /opt/vibus/site/root/localhost/log/php-fpm/access.log
+access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
+
+slowlog = /opt/vibus/site/root/localhost/log/php-fpm/slow.log
+request_slowlog_timeout = 30s
+request_terminate_timeout = 180s
+
+catch_workers_output = yes
+
+security.limit_extensions = .php
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; PHP configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+php_admin_value[open_basedir] = /opt/vibus/site/root/localhost/public_html/
+
+php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f no-reply@localhost
+
+php_admin_value[error_reporting] = E_ALL
+php_flag[display_errors] = on
+php_admin_flag[log_errors] = on
+
+php_admin_value[memory_limit] = 128M
+
+php_value[post_max_size] = 128M
+
+php_value[upload_max_filesize] = 128M
+php_admin_value[max_file_uploads] = 20
+php_admin_value[upload_tmp_dir] = /opt/vibus/site/root/localhost/tmp
+
+php_value[session.save_handler] = files
+php_value[session.save_path]    = /opt/vibus/site/root/localhost/session
+```
