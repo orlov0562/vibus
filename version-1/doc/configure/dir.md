@@ -1,16 +1,23 @@
 # Vibus, версия 1
-## Создание структуры папок
+## Создание структуры папок для сервисов
 ```bash
 mkdir -p /opt/vibus/httpd/conf
 mkdir -p /opt/vibus/nginx/conf
 mkdir -p /opt/vibus/mariadb
 mkdir -p /opt/vibus/php-fpm/{conf,sock,log}
-
+```
+## Создание структуры папок конфигурации по-умолчанию
 mkdir -p /opt/vibus/site/root/localhost/{public_html,session,tmp,secret}
 mkdir -p /opt/vibus/site/root/localhost/log/{httpd,nginx,php-fpm}
 mkdir -p /opt/vibus/site/root/localhost/backup/{store,script}
-
 ```
+
+## Настройка прав на папки конфигурации по-умолчанию
+```bash
+chown -R root:apache /opt/vibus/site/root/
+chmod -R 0770 /opt/vibus/site/root/
+```
+
 ## Структура организации папок и файлов
 
 Все помещаем в папку /opt/vibus/* для того, чтобы все было в одном месте, а не разбросано по всей системе. Это не соответствует идеологии организации папок в Linux, но позволяет делать быстрые миграции сайтов и их конфигураций между серверами, обновления пакетов и по минимуму вносить изменения в конфиги устанавливаемых пакетов.
