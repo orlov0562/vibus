@@ -7,10 +7,10 @@
 ## Настройка VirtualBox
 - Создаем виртуальную машину.
 - Настраиваем второй сетевой интерфейс (первый уже должен быть настроен в режиме NAT), чтобы машина появилась в вашей сети
-  - заходим в Settings виртуальной машины
-  - переходим в раздел Network, вкладка Adapter 2
-    - Включаем [x] Enable Network Adapter
-    - Attached to: Bridged Adapter
+  - заходим в **Settings** виртуальной машины
+  - переходим в раздел **Network**, вкладка **Adapter 2**
+    - Включаем **[x] Enable Network Adapter**
+    - Attached to: **Bridged Adapter**
   - сохраняемся
 
 ## CentOS Minimal
@@ -25,11 +25,11 @@
 nmtui
 ```
 в появившемся окне:
-- выбираем Edit connection
+- выбираем **Edit connection**
 - выбираем интерфейс
-- ставим галку напротив [x] Automatically connect
-- нажимаем Done, Back, повторяем для всех интерфейсов
-- Quit
+- ставим галку напротив **[x] Automatically connect**
+- нажимаем **Done**, **Back**, повторяем для всех интерфейсов
+- **Quit**
 
 Перезапускаем сеть
 ```bash
