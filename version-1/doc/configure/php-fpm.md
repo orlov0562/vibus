@@ -179,3 +179,4 @@ mcedit /opt/vibus/site/root/localhost/public_html/index.php
 <?php
 phpinfo();
 ```
+если теперь зайти по ip адресу http://xx.xx.xx.xx вы должны увидеть "PHP Info" страницу
