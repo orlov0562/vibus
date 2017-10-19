@@ -148,7 +148,7 @@ env[TMP] = /opt/vibus/site/root/localhost/tmp
 env[TMPDIR] = /opt/vibus/site/root/localhost/tmp
 env[TEMP] = /opt/vibus/site/root/localhost/tmp
 
-php_admin_value[open_basedir] = /opt/vibus/site/root/localhost/public_html/
+php_admin_value[open_basedir] = /opt/vibus/site/root/localhost/public_html/:/opt/vibus/site/root/localhost/tmp/
 
 php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f no-reply@localhost
 
