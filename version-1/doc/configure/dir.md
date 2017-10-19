@@ -4,7 +4,7 @@
 mkdir -p /opt/vibus/httpd/conf
 mkdir -p /opt/vibus/nginx/conf
 mkdir -p /opt/vibus/mariadb
-mkdir -p /opt/vibus/php-fpm/{conf,sock}
+mkdir -p /opt/vibus/php-fpm/{conf,sock,log}
 
 mkdir -p /opt/vibus/site/root/localhost/{public_html,session,tmp,secret}
 mkdir -p /opt/vibus/site/root/localhost/log/{httpd,nginx,php-fpm}
