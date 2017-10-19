@@ -47,3 +47,7 @@ mcedit /etc/httpd/conf/httpd.conf
 ...
 IncludeOptional /opt/vibus/httpd/httpd.conf
 ```
+перезапускаем 
+```bash
+systemctl restart httpd
+```
