@@ -42,7 +42,7 @@ CREATE USER 'username'@'localhost' IDENTIFIED BY 'userpassword';
 
 Устанавливаем привилегии пользователю для работы с ранее созданной базой
 ```sql
-GRANT ALL PRIVILEGES ON 'dbname'.* TO 'username'@'localhost';
+GRANT ALL PRIVILEGES ON dbname.* TO 'username'@'localhost';
 ```
 ** тут **username**  = имя пользователя, а **dbname** = имя базы
 
