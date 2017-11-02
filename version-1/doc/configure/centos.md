@@ -58,8 +58,77 @@ service network restart
 ## SSH
 По-умолчанию ssh server уже установлен, поэтому для удобства и сходства с установкой на VPS, заходим в систему через SSH (например через терминал, PAC или Putty)
 
-### Настраиваем ssh авторизацию по ключу
-....
+### Создаем ключи авторизации ssh для root пользователя
+
+На своем ПК, заходим в папку **.ssh** которая находится в домашней папке
+```bash
+cd ~/.ssh
+```
+если папка отсутствует, создаем её и заходим
+```bash
+mkdir ~/.ssh && cd ~/.ssh
+```
+создаем новую пару ключей
+```bash
+ssh-keygen -f SERVERNAME
+```
+** SERVERNAME заменить на произвольное имя вашего сервера
+
+создастся два файла **SERVERNAME** и **SERVERNAME.pub**
+
+устанавливаем им права **0600**
+```bash
+chmod 0600 ~/.ssh/SERVERNAME ~/.ssh/SERVERNAME.pub
+```
+Выводим содержимое файла **SERVERNAME.pub**
+```bash
+cat ~/.ssh/SERVERNAME.pub
+```
+копируем содержимое **НА СЕРВЕР** в файл /root/.ssh/authorized_keys (1 запись = 1 строка, если там уже что-то есть, просто копируете в новую строку)
+
+При необходимости настраиваем свой SSH агент (например Putty или PAC), выбрав в нем авторизацию по ключу и сам ключ **~/.ssh/SERVERNAME** (второй файл, который без расширения .pub)
+
+### Настраиваем ssh авторизацию на сервере только для root, по ключу
+
+Делаем бэкап конфигурационого файла
+```bash
+mv /etc/ssh/sshd_config /etc/sshd_config.orig
+```
+Создаем новый файл конфигурации
+```bash
+mcedit /etc/ssh/sshd_config
+```
+с таким содержимым
+```plain
+SyslogFacility AUTHPRIV
+PermitRootLogin without-password
+PubkeyAuthentication yes
+AuthorizedKeysFile	.ssh/authorized_keys
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+UseDNS no
+UsePrivilegeSeparation sandbox		# Default for new installations.
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+
+# override default of no subsystems
+Subsystem	sftp	/usr/libexec/openssh/sftp-server
+DenyGroups no_sshgroup
+```
+сохраняем конфиг, перезапускаем sshd
+```bash
+service ssh restart
+```
+Теперь, не разрывая сессию (если это удаленная машина), пробуем авторизоваться без логина и пароля, по ключу. Если подключение не удалось, разбираемся где накосячили, в крайнем случае, возвращаем оригинальный конфиг и рестартуем, чтобы применился он
+```bash
+cp /etc/ssh/sshd_config.orig /etc/sshd_config
+service ssh restart
+```
 
 ## Настройка репозиториев и обновление ПО
 
