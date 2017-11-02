@@ -127,7 +127,9 @@ mcedit /opt/vibus/httpd/conf/root-localhost.conf
     </Directory>
 
     <FilesMatch \.php$>
+	<If "-f %{REQUEST_FILENAME}">
 	    SetHandler "proxy:unix:/opt/vibus/php-fpm/sock/root-localhost.sock|fcgi://localhost"
+    	</If>
     </FilesMatch>
 
     ErrorLog  /opt/vibus/site/root/localhost/log/httpd/error.log
