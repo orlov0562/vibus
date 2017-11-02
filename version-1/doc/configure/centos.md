@@ -165,7 +165,22 @@ yum upgrade
 ## Установка базового ПО
 Устанавливаем ПО, которое Вы постоянно используете (у вас может быть другой список)
 ```bash
-yum install wget mc htop screen net-tools
+yum install wget mc htop screen net-tools nano
+```
+
+## Редактор по-умолчанию (например для крона)
+```bash
+mcedit ~/.bash_profile
+```
+и добавляем в конец
+```plain
+...
+export VISUAL="mcedit"
+export EDITOR="mcedit"
+```
+сохраняемся и применяем настройки к текущей сессии
+```bash
+source ~/.bash_profile
 ```
 
 ## Настраиваем SELinux
