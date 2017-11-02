@@ -77,7 +77,7 @@ yum upgrade
 ## Установка базового ПО
 Устанавливаем ПО, которое Вы постоянно используете (у вас может быть другой список)
 ```bash
-yum install wget mc htop screen
+yum install wget mc htop screen net-tools
 ```
 
 ## Настраиваем SELinux
