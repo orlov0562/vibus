@@ -7,6 +7,7 @@ mkdir -p /opt/vibus/mariadb
 mkdir -p /opt/vibus/php-fpm/{conf,sock,log}
 ```
 ## Создание структуры папок конфигурации по-умолчанию
+```bash
 mkdir -p /opt/vibus/site/root/localhost/{public_html,session,tmp,secret}
 mkdir -p /opt/vibus/site/root/localhost/log/{httpd,nginx,php-fpm}
 mkdir -p /opt/vibus/site/root/localhost/backup/{store,script}
