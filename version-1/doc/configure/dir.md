@@ -16,7 +16,7 @@ mkdir -p /opt/vibus/site/root/localhost/backup/{store,script}
 ## Настройка прав на папки конфигурации по-умолчанию
 ```bash
 chown -R root:apache /opt/vibus/site/root/
-chmod -R 0770 /opt/vibus/site/root/
+chmod -R 0755 /opt/vibus/site/root/
 ```
 
 ## Структура организации папок и файлов
