@@ -62,3 +62,13 @@ root
 ```bash
 ln -s /opt/vibus/vsftpd/conf/vsftpd.conf /etc/vsftpd/
 ```
+
+Запускаем vsftpd
+```bash
+systemctl start vsftpd
+```
+
+Добавляем в автозагрузку
+```bash
+systemctl enable vsftpd
+```
