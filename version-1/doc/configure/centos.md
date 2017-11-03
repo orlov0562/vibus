@@ -110,7 +110,7 @@ Host 0.0.0.0
 
 Делаем бэкап конфигурационого файла
 ```bash
-mv /etc/ssh/sshd_config /etc/sshd_config.orig
+mv /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
 ```
 Создаем новый файл конфигурации
 ```bash
