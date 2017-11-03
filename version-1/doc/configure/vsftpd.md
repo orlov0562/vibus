@@ -7,17 +7,14 @@
 ```bash
 yum install vsftpd
 ```
-
 Делаем бэкап конфига
 ```bash
 mv /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.orig
 ```
-
 Создаем папку
 ```bash
 mkdir -p /opt/vibus/vsftpd/{conf,log}
 ```
-
 Создаем файл конфига
 ```bash
 mcedit /opt/vibus/vsftpd/conf/vsftpd.conf
@@ -43,7 +40,6 @@ chroot_list_file=/opt/vibus/vsftpd/conf/no_chroot_users.conf
 # allow_writeable_chroot=YES
 local_root=/opt/vibus/site/$USER
 user_sub_token=$USER
-
 
 listen=YES
 listen_ipv6=NO
