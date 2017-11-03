@@ -8,6 +8,7 @@
 - HTTPD
 - PHP-FPM (PHP 7.2+)
 - MariaDB
+- vsFTPD
 
 ## Установка и настройка
 - [CentOS](doc/configure/centos.md)
@@ -16,7 +17,7 @@
 - [Nginx](doc/configure/nginx.md)
 - [Httpd (Apache)](doc/configure/httpd.md)
 - [PHP, PHP-FPM](doc/configure/php-fpm.md)
-- [vsFTPD](doc/configure/vsftpd.md)
+- [VSFTPD](doc/configure/vsftpd.md)
 - [Проверка настройки PHP](doc/configure/check-php.md)
 - [Настройка нового пользователя](doc/configure/new-user.md)
 - [Настройка крона](doc/configure/cron.md)
