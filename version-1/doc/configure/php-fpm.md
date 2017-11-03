@@ -66,7 +66,7 @@ yum search "php72-php-"
 ```bash
 yum install php-mcrypt php-mbstring php-intl php-gd php-curl php-mysql php-pdo php-zip php-fileinfo php-xml
 ```
-так же добавляем другие необходимы зависимости
+так же добавляем другие необходимые зависимости
 ```bash
 yum install php-pecl-imagick
 ```
