@@ -3,7 +3,7 @@
 
 ### Структура папок
 
-Структура папок пользователя */opt/vibus/site/*
+Структура папок пользователя **/opt/vibus/site/..**
 ```plain
 - /user/                    = root:user = 0751
   - /site.com/              = root:user = 0751
