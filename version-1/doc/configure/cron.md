@@ -25,7 +25,7 @@ MM  HH  DD  MM  DW  CMD
 
 ### Пример конфигурации крон
 ```plain
-0  0,12  *  *  *  php /public_html/console.php param1 >/dev/null 2>&1
+0  0,12  *  *  *  /usr/bin/php /public_html/console.php param1 >/dev/null 2>&1
 ```
 - запуск будет произведен в 00:00 и в 12:00
 - **>/dev/null 2>&1** означает, что весь вывод (STDOUT, STDERR) будет перенаправлен в /dev/null, используется чтобы крон не отправлял email-ы
