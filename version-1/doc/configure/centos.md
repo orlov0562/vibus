@@ -251,6 +251,13 @@ iptables -P OUTPUT ACCEPT
 ```bash
 iptables --line -vnL
 ```
+
+Если есть какое-то правило, которое надо удалить, это можно сделать так
+```bash
+iptables --line -vnL    # вывод всех правил по номерам
+iptables -D INPUT 3     # удаление правила в цепочке INPUT под номером 3
+```
+
 Сохраняем правила, для автозагрузки
 ```bash
 service iptables save
