@@ -232,7 +232,7 @@ iptables --line -vnL
 ```bash
 # Exceptions to default policy
 iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT   # PING
-iptables -A INPUT -p udp --dport 33435:33525 -j ACCEPT         #TRACEROUTE
+iptables -A INPUT -p udp --dport 33435:33525 -j ACCEPT         # TRACEROUTE
 iptables -A INPUT -p tcp --dport 21 -j ACCEPT                  # FTP
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT                  # SSH
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT                  # HTTP
