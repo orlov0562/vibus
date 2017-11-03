@@ -59,12 +59,16 @@ php -v
 PHP 7.2.0RC4 (cli) (built: Oct 10 2017 14:59:39) ( NTS )
 ```
 теперь смотрим доступные модули 
-```plain
+```bash
 yum search "php72-php-"
 ```
 и ставим нужные
-```plain
+```bash
 yum install php-mcrypt php-mbstring php-intl php-gd php-curl php-mysql php-pdo php-zip php-fileinfo php-xml
+```
+так же добавляем другие необходимы зависимости
+```bash
+yum install php-pecl-imagick
 ```
 
 ## Настройка PHP-FPM
