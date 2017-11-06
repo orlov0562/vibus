@@ -72,6 +72,11 @@ alternatives --set mta /usr/sbin/sendmail.postfix
 ```bash
 alternatives --display mta
 ```
+Ту же самую проверку можно проверить выполнив
+```bash
+ls -Al /etc/alternatives/mta
+```
+Должны увидеть ссылку на **/usr/sbin/sendmail.postfix**
 
 Добавялем postfix в автозагрузку
 ```bash
@@ -83,3 +88,23 @@ systemctl start postfix
 systemctl start postfix
 ```
 
+### Команды полезные для отладки
+
+Какой сервис слушает 25 порт
+```bash
+netstat -nlp | grep 25
+```
+Просмотр очереди postfix
+```bash
+postqueue -p
+```
+
+Принудительная отправка писем
+```bash
+postqueue -f
+```
+Повторная отправка писем, который были "заморожены" после нескольких неудачных попыток
+```bash
+postsuper -H ALL
+postqueue -f
+```
