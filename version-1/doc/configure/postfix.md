@@ -55,7 +55,6 @@ mynetworks = 127.0.0.1
 # И самое главное: ограничение неавторизованных отправителей, без него наш сервер будет открытым релеем, и его тут же используют спамеры
 smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
 ```
-
 Создаем символическую ссылку на наш файл в папку postfix-а
 ```bash
 ln -s /opt/vibus/postfix/main.cnf /etc/postfix/main.cnf
@@ -130,7 +129,6 @@ update-alternatives --install /usr/sbin/sendmail sendmail /usr/sbin/sendmail.sen
 ```bash
 alternatives --display mta
 ```
-
 Если он отличается от sendmail.postfix, то устанавливаем его так
 ```bash
 alternatives --set mta /usr/sbin/sendmail.postfix
@@ -158,6 +156,8 @@ systemctl start postfix
 ```bash
 systemctl start postfix
 ```
+
+---
 
 ### Команды полезные для отладки
 
