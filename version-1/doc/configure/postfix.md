@@ -20,6 +20,8 @@ mkdir -p /opt/vibus/postfix
 
 Смотрим FQDN имя сервера
 ```bash
+uname -n
+# или
 perl -e 'use Sys::Hostname; print hostname, "\n"'
 # или
 php -r 'echo gethostname (),"\n";'
