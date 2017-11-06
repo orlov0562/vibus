@@ -8,4 +8,5 @@ Match User *,!root
 	AllowTcpForwarding no
 	PermitTTY yes
 	ChrootDirectory /jail/%u
+	# next option disable ssh login and allow only SFTP
 	#ForceCommand internal-sftp
