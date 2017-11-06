@@ -125,7 +125,7 @@ update-alternatives --install /usr/sbin/sendmail sendmail /usr/sbin/sendmail.sen
 --slave /usr/share/man/man8/sendmail.8.gz mta-sendmailman /usr/share/man/man8/sendmail.sendmail.8.gz
 ```
 
-Проверяем опять MTA с наибольшим приоритетом
+Проверяем опять MTA
 ```bash
 alternatives --display mta
 ```
@@ -137,7 +137,7 @@ alternatives --set mta /usr/sbin/sendmail.postfix
 ```bash
 alternatives --config mta
 ```
-Опять проверяем, чтобы бы sendmail.postfix имел наименьший "priority"
+Опять проверяем, чтобы бы sendmail.postfix был выбран и имел наивысший "priority"
 ```bash
 alternatives --display mta
 ```
