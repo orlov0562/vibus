@@ -165,6 +165,7 @@ systemctl start postfix
 ```bash
 netstat -nlp | grep 25
 ```
+
 Просмотр очереди postfix
 ```bash
 postqueue -p
@@ -179,6 +180,12 @@ postqueue -f
 postsuper -H ALL
 postqueue -f
 ```
+
+Лог почты
+```bash
+tail -n50 /var/log/maillog
+```
+
 
 Формат параметров команды alternatives
 ```bash
