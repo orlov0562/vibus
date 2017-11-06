@@ -1,3 +1,8 @@
+# Vibus, версия 1
+## Установка и настройка MTA (Mail Transfer Agent)
+
+### Установка и настройка postfix
+
 Устанавливаем postfix
 ```bash
 yum install postfix
