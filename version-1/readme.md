@@ -18,6 +18,7 @@
 - [Httpd (Apache)](doc/configure/httpd.md)
 - [PHP, PHP-FPM](doc/configure/php-fpm.md)
 - [VSFTPD](doc/configure/vsftpd.md)
+- [Postfix (MTA)](doc/configure/postfix.md)
 - [Проверка настройки PHP](doc/configure/check-php.md)
 - [Настройка нового пользователя](doc/configure/new-user.md)
 - [Настройка крона](doc/configure/cron.md)
