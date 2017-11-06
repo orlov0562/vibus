@@ -75,7 +75,7 @@ Current `best' version is /usr/sbin/sendmail.sendmail.
 ```
 в данном случае, это **sendmail.sendmail**
 
-меняем приоритет sendmail.sendmail на 30, a postfix на 90
+меняем приоритет **sendmail** на 30, a **postfix** на 90 (выше цифар = выше приоритет)
 
 делаем бэкап **/var/lib/alternatives/mta**
 ```bash
