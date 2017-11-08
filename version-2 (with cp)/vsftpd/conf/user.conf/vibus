@@ -1,0 +1,2 @@
+allow_writeable_chroot=YES
+local_root=/opt/vibus/cp/site

@@ -1,0 +1,8 @@
+The default environment file is located here
+/etc/sysconfig/httpd
+
+Folder that contains services here
+/usr/lib/systemd/system/
+
+Info:
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd

@@ -1,0 +1,1 @@
+ps -U pdfroboto -u pdfroboto -o pcpu,pid,args

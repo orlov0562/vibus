@@ -1,0 +1,13 @@
+smtpd_banner = site.com
+myhostname = site.com
+mydestination = site.com
+myorigin = site.com
+
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+
+inet_interfaces = 127.0.0.1
+
+mynetworks = 127.0.0.1
+
+smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
