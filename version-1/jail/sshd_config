@@ -1,0 +1,12 @@
+.....
+
+Subsystem	sftp	internal-sftp
+
+# Example of overriding settings on a per-user basis
+Match User *,!root
+	X11Forwarding no
+	AllowTcpForwarding no
+	PermitTTY yes
+	ChrootDirectory /jail/%u
+	# next option disable ssh login and allow only SFTP
+	#ForceCommand internal-sftp

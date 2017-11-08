@@ -110,7 +110,7 @@ Host 0.0.0.0
 
 Делаем бэкап конфигурационого файла
 ```bash
-mv /etc/ssh/sshd_config /etc/sshd_config.orig
+mv /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
 ```
 Создаем новый файл конфигурации
 ```bash
@@ -228,13 +228,17 @@ iptables -X
 ```bash
 iptables --line -vnL
 ```
-Разрешаем входящие соединения только на порты 21,22,80,443
+Разрешаем входящие соединения только на порты 21,22,80,443 + ping и traceroute
 ```bash
 # Exceptions to default policy
-iptables -A INPUT -p tcp --dport 21 -j ACCEPT       # FTP
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT       # SSH
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT       # HTTP
-iptables -A INPUT -p tcp --dport 443 -j ACCEPT      # HTTPS
+
+iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT   # PING
+iptables -A INPUT -p udp --dport 33435:33525 -j ACCEPT         # TRACEROUTE
+
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT                  # FTP
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT                  # SSH
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT                  # HTTP
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT                 # HTTPS
 
 iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -251,6 +255,13 @@ iptables -P OUTPUT ACCEPT
 ```bash
 iptables --line -vnL
 ```
+
+Если есть какое-то правило, которое надо удалить, это можно сделать так
+```bash
+iptables --line -vnL    # вывод всех правил по номерам
+iptables -D INPUT 3     # удаление правила в цепочке INPUT под номером 3
+```
+
 Сохраняем правила, для автозагрузки
 ```bash
 service iptables save
