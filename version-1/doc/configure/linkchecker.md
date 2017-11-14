@@ -13,9 +13,9 @@ timeout -sINT 1m linkchecker http://site.com
 
 **Common kill signal**
 ```plain
-SIGHUP 	1 	Hangup
-SIGINT 	2 	Interrupt from keyboard
-SIGKILL 	9 	Kill signal (never graceful)
-SIGTERM 	15 	Termination signal
-SIGSTOP 	17,19,23 	Stop the process 
+SIGHUP    1 	Hangup
+SIGINT    2 	Interrupt from keyboard
+SIGKILL   9 	Kill signal (never graceful)
+SIGTERM   15 	Termination signal
+SIGSTOP   17,19,23 	Stop the process 
 ```
