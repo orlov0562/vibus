@@ -1,6 +1,6 @@
 # LinkChecker
-site: http://wummel.github.io/linkchecker/index.html
-main: http://wummel.github.io/linkchecker/man1/linkchecker.1.html
+- site: http://wummel.github.io/linkchecker/index.html
+- main: http://wummel.github.io/linkchecker/man1/linkchecker.1.html
 
 # Run with timeout from cli example
 
