@@ -269,3 +269,12 @@ service iptables save
 ## Завершение установки
 Перезагружаемся
 
+## Полезные команды
+### Установка/Удаление rpm
+```bash
+# установка
+rpm -ivh webmin.rpm
+# удаление
+rpm -qa | grep -i webmin
+rpm -e <package name>
+```
