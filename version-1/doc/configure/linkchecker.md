@@ -2,6 +2,23 @@
 - site: http://wummel.github.io/linkchecker/index.html
 - main: http://wummel.github.io/linkchecker/man1/linkchecker.1.html
 
+# Instalation on CentOS 7
+
+```bash
+yum install python2-pip python-devel gcc
+pip install --upgrade pip
+pip install linkchecker
+```
+в случае ошибки
+```text
+This program requires Python requests 2.2.0 or later.
+```
+устанавливаем requests
+```bash
+pip install requests==2.9.2
+```
+
+
 # Run with timeout from cli example
 
 ```bash
