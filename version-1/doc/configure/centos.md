@@ -325,7 +325,7 @@ firewall-cmd --get-default-zone
 ```
 если еще firewalld не добавлен, добавляем в автозагрузку
 ```bash
-systemctl start firewalld
+systemctl enable firewalld
 ```
 
 Справка по командам тут: [http://www.firewalld.org/](http://www.firewalld.org/documentation/man-pages/firewall-cmd.html)
