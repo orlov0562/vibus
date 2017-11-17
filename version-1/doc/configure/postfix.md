@@ -149,7 +149,7 @@ ls -Al /etc/alternatives/mta
 
 Добавялем postfix в автозагрузку
 ```bash
-systemctl start postfix
+systemctl enable postfix
 ```
 
 Стартуем postfix 
