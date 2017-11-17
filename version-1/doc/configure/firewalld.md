@@ -52,8 +52,6 @@ firewall-cmd --get-services
 ```
 добавляем нужные
 ```bash
-firewall-cmd --zone=webserver --permanent --add-service=ftp
-firewall-cmd --zone=webserver --permanent --add-port=21/tcp
 firewall-cmd --zone=webserver --permanent --add-service=ssh
 firewall-cmd --zone=webserver --permanent --add-service=http
 firewall-cmd --zone=webserver --permanent --add-service=https
@@ -71,9 +69,9 @@ firewall-cmd --zone=webserver --list-all
 ```
 открываем нужные порты
 ```bash
-# один порт
-firewall-cmd --zone=webserver --permanent --add-port=8000/tcp
-# диапазон портов
+# ftp
+firewall-cmd --zone=webserver --permanent --add-port=21/tcp
+# traceroute
 firewall-cmd --zone=webserver --permanent --add-port=33435:33525/udp
 ```
 просмотр открытых портов
