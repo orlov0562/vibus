@@ -237,13 +237,12 @@ ZONE=webserver
 ```
 перезапускаем сеть и файрвол
 ```bash
-sudo systemctl restart network firewalld
+systemctl restart network firewalld
 ```
 проверяем зоны
 ```bash
 firewall-cmd --get-active-zones
 ```
-
 смотрим доступные сервисы
 ```bash
 firewall-cmd --get-services
@@ -262,7 +261,7 @@ firewall-cmd --zone=webserver --list-all
 ```
 при необходимости удаляем лишние сервисы и применяем правила
 ```bash
-irewall-cmd  --zone=webserver --permanent --remove-service=ssh
+firewall-cmd --zone=webserver --permanent --remove-service=ssh
 firewall-cmd --reload
 firewall-cmd --zone=webserver --list-all
 ```
@@ -277,16 +276,25 @@ firewall-cmd --zone=webserver --permanent --add-port=33435:33525/udp
 ```bash
 firewall-cmd --zone=webserver --list-ports
 ```
+по-умолчанию блокировки icmp (например пинга) нет, если нужно, тогда 
+смотрим доступный список icmp
+```bash
+firewall-cmd --get-icmptypes
+```
+и блокируем, например пинг
+```bash
+firewall-cmd --zone=webserver --permanent --add-icmp-block=echo-reply
+```
 применяем все правила
 ```bash
 firewall-cmd --reload
 ```
-назначаем зону нашу зону "по умолчанию" и проверяем
+если все работает, назначаем зону нашу зону "по-умолчанию" и проверяем
 ```bash
 firewall-cmd --set-default-zone=webserver
 firewall-cmd --get-default-zone
 ```
-если еще не добавлен, добавляем в автозагрузку
+если еще firewalld не добавлен, добавляем в автозагрузку
 ```bash
 systemctl start firewalld
 ```
