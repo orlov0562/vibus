@@ -283,12 +283,41 @@ firewall-cmd --get-icmptypes
 ```
 и блокируем, например пинг
 ```bash
-firewall-cmd --zone=webserver --permanent --add-icmp-block=echo-reply
+firewall-cmd --zone=webserver --permanent --add-icmp-block=echo-request
 ```
-применяем все правила
+другой способ, это поменять поведение с "разрешить все icmp кроме", на "заблокировать все icmp кроме" и разрешить только нужные
+```bash
+firewall-cmd --zone=webserver --permanent --add-icmp-block-inversion
+```
+не забываем применять правила
 ```bash
 firewall-cmd --reload
 ```
+теперь если выполнить
+```bash
+firewall-cmd --zone=webserver --list-all
+```
+увидим
+```text
+webserver (active)
+  target: default
+  icmp-block-inversion: yes <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  interfaces: venet0
+  sources: 
+  services: ftp ssh http https
+  ports: 8000/tcp
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+```
+и разрешаем только пинг
+```bash
+firewall-cmd --zone=webserver --permanent --add-icmp-block=echo-request
+```
+
 если все работает, назначаем зону нашу зону "по-умолчанию" и проверяем
 ```bash
 firewall-cmd --set-default-zone=webserver
