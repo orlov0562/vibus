@@ -226,6 +226,24 @@ ifconfig -a
 ```bash
 firewall-cmd --zone=webserver --permanent --add-interface=venet0:0
 ```
+
+чтобы перманентно привязать интерфейс к зоне открываем файл настройки интерфейса
+```bash
+mcedit /etc/sysconfig/network-scripts/ifcfg-venet0:0
+```
+и добавляем/меняем там 
+```bash
+ZONE=webserver
+```
+перезапускаем сеть и файрвол
+```bash
+sudo systemctl restart network firewalld
+```
+проверяем зоны
+```bash
+firewall-cmd --get-active-zones
+```
+
 смотрим доступные сервисы
 ```bash
 firewall-cmd --get-services
