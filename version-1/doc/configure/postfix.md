@@ -10,12 +10,12 @@ yum install postfix
 
 Делаем бэкап оригинального конфига
 ```bash
-mv /etc/postfix/main.cnf /etc/postfix/main.cnf.orig
+mv /etc/postfix/main.cf /etc/postfix/main.cf.orig
 ```
 
 Создаем папку для нашего конфига
 ```bash
-mkdir -p /opt/vibus/postfix
+mkdir -p /opt/vibus/postfix/conf
 ```
 
 Смотрим FQDN имя сервера
@@ -30,7 +30,7 @@ php -r 'echo gethostname (),"\n";'
 
 Создаем файл конфига
 ```bash
-mcedit /opt/vibus/postfix/main.cnf
+mcedit /opt/vibus/postfix/conf/main.cf
 ```
 с таким содержимым
 ```plain
@@ -57,7 +57,7 @@ smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
 ```
 Создаем символическую ссылку на наш файл в папку postfix-а
 ```bash
-ln -s /opt/vibus/postfix/main.cnf /etc/postfix/main.cnf
+ln -s /opt/vibus/postfix/conf/main.cf /etc/postfix/conf/main.cf
 ```
 Смотрим текущий MTA, **с наибольшим** приоритетом
 ```bash
