@@ -102,6 +102,19 @@ ln -s /etc/letsencrypt/live/site.com /opt/vibus/cert/site.com
 ...
 ```
 
+При необходимости добавляем редирект в .htaccess сайта
+```bash
+RewriteEngine On
+...
+#First rewrite any request to the wrong domain to use the correct one (here www.)
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#Now, rewrite to HTTPS:
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+```
+
 Перезапускаем httpd
 ```bash
 systemctl restart httpd
