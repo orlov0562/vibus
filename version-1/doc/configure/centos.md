@@ -133,7 +133,7 @@ rpm -e <package name>
 ```bash
 nmap localhost
 ```
-Какие сервисы на каких портах
+Кто занял определенный порт
 ```bash
 netstat -ltnp | grep -w ':80' 
 ```
