@@ -128,8 +128,17 @@ rpm -qa | grep -i webmin
 rpm -e <package name>
 ```
 
-### Проверка сервисов на портах, открытых портов
+### Проверка портов
+Какие сервисы на каких портах
 ```bash
 nmap localhost
+```
+Какие сервисы на каких портах
+```bash
+netstat -ltnp | grep -w ':80' 
+```
+Открыт ли порт
+```bash
 telnet localhost 443
 ```
+
