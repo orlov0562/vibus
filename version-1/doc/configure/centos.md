@@ -74,7 +74,7 @@ yum upgrade
 ## Установка базового ПО
 Устанавливаем ПО, которое Вы постоянно используете (у вас может быть другой список)
 ```bash
-yum install wget mc htop screen net-tools nano git composer
+yum install wget curl mc htop screen net-tools nmap telnet nano git composer
 ```
 
 ## Редактор по-умолчанию (например для крона)
@@ -126,4 +126,10 @@ rpm -ivh webmin.rpm
 # удаление
 rpm -qa | grep -i webmin
 rpm -e <package name>
+```
+
+### Проверка сервисов на портах, открытых портов
+```bash
+nmap localhost
+telnet localhost 443
 ```
