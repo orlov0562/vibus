@@ -135,7 +135,7 @@ nmap localhost
 ```
 Кто занял определенный порт
 ```bash
-netstat -ltnp | grep -w ':80' 
+netstat -lntp | grep ":80"
 ```
 Открыт ли порт
 ```bash
