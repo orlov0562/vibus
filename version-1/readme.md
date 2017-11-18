@@ -26,4 +26,4 @@
 - [Настройка нового пользователя](doc/configure/new-user.md)
 - [Настройка крона](doc/configure/cron.md)
 - [Настройка HTTPS (с сертификатом от LetsEncrypt)](doc/configure/letsencrypt-certbot.md)
-- [Настройка LinksChecker](doc/configure/linkchecker.md)
+- [Настройка LinkChecker](doc/configure/linkchecker.md)
