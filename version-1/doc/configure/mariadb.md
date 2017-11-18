@@ -111,3 +111,5 @@ mysql -uusername -p
 USE dbname;
 SHOW TABLES;
 ```
+## Документация
+- [Описание опций конфигурации MySQL](https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html)
