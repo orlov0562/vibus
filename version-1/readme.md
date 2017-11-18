@@ -22,6 +22,6 @@
 - [Проверка настройки PHP](doc/configure/check-php.md)
 - [Настройка нового пользователя](doc/configure/new-user.md)
 - [Настройка крона](doc/configure/cron.md)
-- [Настройка HTTPS с сертификатом от LetsEncrypt](doc/configure/letsencrypt-certbot.md)
+- [Настройка HTTPS (с сертификатом от LetsEncrypt)](doc/configure/letsencrypt-certbot.md)
 
 
