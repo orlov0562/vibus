@@ -52,6 +52,7 @@ firewall-cmd --get-services
 ```
 добавляем нужные
 ```bash
+firewall-cmd --zone=webserver --permanent --add-service=ftp
 firewall-cmd --zone=webserver --permanent --add-service=ssh
 firewall-cmd --zone=webserver --permanent --add-service=http
 firewall-cmd --zone=webserver --permanent --add-service=https
