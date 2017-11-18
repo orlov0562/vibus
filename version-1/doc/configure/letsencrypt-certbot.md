@@ -109,7 +109,7 @@ cp /opt/vibus/services/httpd/vhosts/user-site.com.conf /opt/vibus/services/httpd
 </IfModule>
 ```
 
-При необходимости добавляем редирект в .htaccess сайта
+При необходимости добавляем редирект в конфигурацию или в .htaccess сайта
 ```bash
 RewriteEngine On
 ...
