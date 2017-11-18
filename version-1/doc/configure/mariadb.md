@@ -5,6 +5,55 @@
 ```bash
 yum install mariadb-server
 ```
+создаем папку в vibus
+```bash
+mkdir -p /opt/vibus/services/mariadb/conf
+```
+копируем оригинальные файлы настроек
+```bash
+cp /etc/my.cnf.d/* /opt/vibus/services/mariadb/conf/
+```
+делаем бэкапы оригинальных файлов
+```bash
+mv /etc/my.cnf.d/client.cnf /etc/my.cnf.d/client.cnf.orig
+mv /etc/my.cnf.d/mysql-clients.cnf /etc/my.cnf.d/mysql-clients.cnf.orig
+mv /etc/my.cnf.d/server.cnf /etc/my.cnf.d/server.cnf.orig
+```
+создаем символические ссылки
+```bash
+ln -s /opt/vibus/services/mariadb/conf/client.cnf /etc/my.cnf.d/client.cnf
+ln -s /opt/vibus/services/mariadb/conf/mysql-clients.cnf /etc/my.cnf.d/mysql-clients.cnf
+ln -s /opt/vibus/services/mariadb/conf/server.cnf /etc/my.cnf.d/server.cnf
+```
+настраиваем параметры работы, например для слабых VPS (до 1 Гб ram)
+```bash
+mcedit ln -s /opt/vibus/services/mariadb/conf/server.cnf
+```
+и добавляем
+```text
+[server]
+[mysqld]
+port                            = 3306
+socket                          = /var/lib/mysql/mysql.sock
+skip-external-locking
+key_buffer_size                 = 64M
+max_allowed_packet              = 1M
+table_open_cache                = 64
+sort_buffer_size                = 8M
+net_buffer_length               = 8K
+read_buffer_size                = 256K
+read_rnd_buffer_size            = 512K
+myisam_sort_buffer_size         = 128M
+[embedded]
+[mysqld-5.5]
+[mariadb]
+[mariadb-5.5]
+
+```
+заранее подготовленные конфигурации можно увидеть в файлах: 
+```bash
+ls -l /usr/share/mysql | grep "\.cnf"
+```
 
 запускаем и добавляем в автозапуск
 ```bash
@@ -16,7 +65,6 @@ systemctl start mariadb
 ```bash
 mysql_secure_installation
 ```
-
 опционально, тюнингуем конфигурацию с помощью Tuning скрипта. Описание [тут](http://www.day32.com/MySQL/)
 ```bash
 yum install bc
