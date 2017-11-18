@@ -12,9 +12,9 @@ mcedit /opt/vibus/services/httpd/conf/ssl.conf
 ```
 с таким содержимым (взято из **/etc/httpd/conf.d/ssl.conf**)
 ```text
-Listen 443 https
-
 <IfModule mod_ssl.c>
+    Listen 443 https
+    
     SSLPassPhraseDialog exec:/usr/libexec/httpd-ssl-pass-dialog
     SSLSessionCache         shmcb:/run/httpd/sslcache(512000)
     SSLSessionCacheTimeout  300
