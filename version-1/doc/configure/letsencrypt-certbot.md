@@ -83,23 +83,30 @@ certbot certonly --webroot \
 ln -s /etc/letsencrypt/live/site.com /opt/vibus/cert/site.com
 ```
 
-Для нужного домена добавляем 443 порт в VirtualHost и инструкции по подключению сертификатов
+Для нужного домена создаем еще один конфиг домена
+```bash
+cp /opt/vibus/services/httpd/vhosts/user-site.com.conf /opt/vibus/services/httpd/vhosts/user-site.com-ssl.conf
+```
+в нем меняем порт и добавляем инструкции по подключению сертификатов
 ```text
-<VirtualHost *:80 *:443>
-...
-    SSLEngine on
+<IfModule mod_ssl.c>
+    <VirtualHost *:443>
+    ...
+        SSLEngine on
 
-    SSLCertificateFile      /opt/vibus/services/httpd/cert/site.com/cert.pem
-    SSLCertificateKeyFile   /opt/vibus/services/httpd/cert/site.com/privkey.pem
-    SSLCertificateChainFile /opt/vibus/services/httpd/cert/site.com/fullchain.pem
+        SSLCertificateFile      /opt/vibus/services/httpd/cert/site.com/cert.pem
+        SSLCertificateKeyFile   /opt/vibus/services/httpd/cert/site.com/privkey.pem
+        SSLCertificateChainFile /opt/vibus/services/httpd/cert/site.com/fullchain.pem
 
-    <FilesMatch "\.php$">
-        SSLOptions +StdEnvVars
-    </FilesMatch>
+        <FilesMatch "\.php$">
+            SSLOptions +StdEnvVars
+        </FilesMatch>
 
-    BrowserMatch "MSIE [2-6]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
-    BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
-...
+        BrowserMatch "MSIE [2-6]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+        BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+    ...
+    </VirtualHost>
+</IfModule>
 ```
 
 При необходимости добавляем редирект в .htaccess сайта
