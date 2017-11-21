@@ -154,16 +154,7 @@ xl2tpd[27536]: Forked again by Xelerance (www.xelerance.com) (C) 2006-2016
 xl2tpd[27536]: Listening on IP address 5.5.5.5, port 1701
 ```
 ### Настройка файрвола
-ИЛИ настравиваем iptables
-```bash
-echo "net.ipv4.ip_forward = 1"  >> /etc/sysctl.conf
-sysctl --system
-iptables -t nat -A POSTROUTING -o eth0 -s 172.22.100.0/24 -j MASQUERADE
-iptables -A FORWARD -i eth0 -o ppp0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A FORWARD -i ppp0 -o eth0 -j ACCEPT
-service iptables save
-```
-### ИЛИ настравиваем firewalld
+** настравиваем firewalld **
 создаем сервис xl2tpd
 ```bash
 mcedit /etc/firewalld/services/xl2tpd.xml
@@ -187,6 +178,15 @@ firewall-cmd --zone=webserver --permanent --direct --add-rule ipv4 nat POSTROUTI
 firewall-cmd --zone=webserver --permanent --direct --add-rule ipv4 filter FORWARD 0 -i eth0 -o ppp0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 firewall-cmd --zone=webserver --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp0 -o eth0 -j ACCEPT
 firewall-cmd --reload 
+```
+**ИЛИ настравиваем iptables**
+```bash
+echo "net.ipv4.ip_forward = 1"  >> /etc/sysctl.conf
+sysctl --system
+iptables -t nat -A POSTROUTING -o eth0 -s 172.22.100.0/24 -j MASQUERADE
+iptables -A FORWARD -i eth0 -o ppp0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i ppp0 -o eth0 -j ACCEPT
+service iptables save
 ```
 ### завершение установки
 
