@@ -44,6 +44,9 @@ net_buffer_length               = 8K
 read_buffer_size                = 256K
 read_rnd_buffer_size            = 512K
 myisam_sort_buffer_size         = 128M
+default-storage-engine          = myisam
+innodb_file_per_table           = 1
+
 [embedded]
 [mysqld-5.5]
 [mariadb]
