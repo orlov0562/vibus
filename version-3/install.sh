@@ -36,6 +36,7 @@ CFG_VIBUS_CREATE_DIR_LOGROTATE=true
 CFG_YUM_INSTALL_FIREWALLD=true
 CFG_VIBUS_CREATE_DIR_FIREWALLD=true
 CFG_FIREWALLD_CREATE_SERVER_ZONE=true
+CFG_FIREWALLD_SKIP_INTERFACES_MODIFY=false
 CFG_FIREWALLD_SET_SERVER_ZONE_AS_DEFAULT=true
 
 CFG_YUM_INSTALL_FAIL2BAN=true
@@ -86,8 +87,8 @@ yum_install () {
     printf "\"$1\" .. "
 
     if [ "`rpm -qa $1`" == "" ]; then
-    yum install -y $1 >/dev/null 2>&1
-        if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: " >&2; exit; fi
+        STDERR="$(yum install -y $1 2>&1 > /dev/null)"
+        if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
     else
         echo "ALREADY INSTALLED"
     fi
@@ -103,11 +104,11 @@ yum_ntd_install () {
     printf "\"$1\" .. "
 
     if [ "`rpm -qa $1`" == "" ]; then
-    yum install -y $1 >/dev/null 2>&1
+        STDERR="$(yum install -y $1 2>&1 > /dev/null)"
         if [ $? -eq 0 ]; then
             echo "OK";
         else
-            if [ $? -eq 1 ]; then echo "ALREADY INSTALLED VIA ANOTHER PACKAGE"; else echo "ERR #$?: " >&2; exit; fi
+            if [ $? -eq 1 ]; then echo "ALREADY INSTALLED VIA ANOTHER PACKAGE"; else echo "ERR #$?: $STDERR" >&2; exit; fi
         fi
     else
         echo "ALREADY INSTALLED"
@@ -233,7 +234,18 @@ fi
 
 # ------------------------------------------------
 
-yum_if_install $CFG_YUM_INSTALL_EPEL_RELEASE epel-release
+if $CFG_YUM_INSTALL_REMI_RELEASE; then
+
+    printf 'Install "epel-release" repository ..'
+
+    if [ "`rpm -qa epel-release`" == "" ]; then
+    yum -y --nogpgcheck install epel-release >/dev/null 2>&1
+        if [ $? -eq 0 ]; then echo "OK "; else echo "ERR #$?: " >&2; exit; fi
+    else
+        echo "ALREADY INSTALLED"
+    fi
+fi
+
 
 # ------------------------------------------------
 
@@ -321,23 +333,26 @@ yum_if_install $CFG_YUM_INSTALL_FIREWALLD firewalld
 if $CFG_FIREWALLD_CREATE_SERVER_ZONE; then
     echo "Configure firewalld .. "
 
-    printf "%s" "- check IFACEs and IFACEs conf files .. "
+    if ! $CFG_FIREWALLD_SKIP_INTERFACES_MODIFY; then
 
-    IFACES=`ip -o link show | awk '{print $2,$9}' | grep 'UP' | awk '{print substr($1, 1, length($1)-1)}'`
+        printf "%s" "- check IFACEs and IFACEs conf files .. "
 
-    if [ -z "$IFACES" ]; then
-        echo "ERR: IFACES that have status UP not found"
-        exit
-    fi
+        IFACES=`ip -o link show | awk '{print $2,$9}' | grep 'UP' | awk '{print substr($1, 1, length($1)-1)}'`
 
-    for IFACE in $IFACES; do
-        if [ ! -f /etc/sysconfig/network-scripts/ifcfg-$IFACE ]; then
-            echo "ERR: not found IFACE $IFACE configuration file: /etc/sysconfig/network-scripts/ifcfg-$IFACE"
+        if [ -z "$IFACES" ]; then
+            echo "ERR: IFACES that have status UP not found"
             exit
         fi
-    done
 
-    echo "OK"
+        for IFACE in $IFACES; do
+            if [ ! -f /etc/sysconfig/network-scripts/ifcfg-$IFACE ]; then
+                echo "ERR: not found IFACE $IFACE configuration file: /etc/sysconfig/network-scripts/ifcfg-$IFACE"
+                exit
+            fi
+        done
+
+        echo "OK"
+    fi
 
     printf "%s" "- create WEBSERVER zone .. "
 
@@ -352,14 +367,15 @@ if $CFG_FIREWALLD_CREATE_SERVER_ZONE; then
     firewall-cmd --permanent --new-zone=webserver >/dev/null 2>&1
     firewall-cmd --reload >/dev/null 2>&1
 
-
-    for IFACE in $IFACES; do
-        firewall-cmd --zone=webserver --permanent --add-interface=$IFACE >/dev/null 2>&1
-        if [ "`cat /etc/sysconfig/network-scripts/ifcfg-$IFACE | grep ZONE=webserver`" == "" ]; then
-            cp /etc/sysconfig/network-scripts/ifcfg-$IFACE /etc/sysconfig/network-scripts/ifcfg-$IFACE.vibus_bak
-            printf "\nZONE=webserver" >> /etc/sysconfig/network-scripts/ifcfg-$IFACE
-        fi
-    done
+    if ! $CFG_FIREWALLD_SKIP_INTERFACES_MODIFY; then
+        for IFACE in $IFACES; do
+            firewall-cmd --zone=webserver --permanent --add-interface=$IFACE >/dev/null 2>&1
+            if [ "`cat /etc/sysconfig/network-scripts/ifcfg-$IFACE | grep ZONE=webserver`" == "" ]; then
+                cp /etc/sysconfig/network-scripts/ifcfg-$IFACE /etc/sysconfig/network-scripts/ifcfg-$IFACE.vibus_bak
+                printf "\nZONE=webserver" >> /etc/sysconfig/network-scripts/ifcfg-$IFACE
+            fi
+        done
+    fi
 
     firewall-cmd --zone=webserver --permanent --add-service=ftp >/dev/null 2>&1
     firewall-cmd --zone=webserver --permanent --add-service=ssh >/dev/null 2>&1
@@ -490,3 +506,16 @@ if $CFG_CREATE_HOSTNAME_DOMAIN_DIR; then
 fi
 
 # ------------------------------------------------
+
+if $CFG_FIREWALLD_CREATE_SERVER_ZONE; then
+    if $CFG_FIREWALLD_SKIP_INTERFACES_MODIFY; then
+        echo "========================================================="
+        echo "!!! FIREWALLD"
+        echo "!!! ------------------------------------------------------"
+        echo "!!! AUTO MODIFY OF IFACE FILES DISABLED"
+        echo "!!! YOU SHOULD ADD INSTRUCTIONS MANUALLY TO THE IFACES"
+        echo "!!! CONFIGURATION FILES THAT LOCATED HERE:"
+        echo "!!! /etc/sysconfig/network-scripts/iface-{NAME}"
+        echo "========================================================="
+    fi
+fi
