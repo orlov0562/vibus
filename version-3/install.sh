@@ -230,6 +230,14 @@ if $CFG_CREATE_VIBUS_DIR_STRUCT; then
         mkdir -p /opt/vibus/services/mariadb/conf
         echo '- mariadb dir .. OK';
     fi
+    
+    if $CFG_VIBUS_CREATE_DIR_VSFTPD; then
+        mkdir -p /opt/vibus/services/vsftpd
+        mkdir -p /opt/vibus/services/vsftpd/conf
+        mkdir -p /opt/vibus/services/vsftpd/conf/users.conf
+        mkdir -p /opt/vibus/services/vsftpd/logs
+        echo '- vsftpd dir .. OK';    
+    fi
 fi
 
 # ------------------------------------------------
