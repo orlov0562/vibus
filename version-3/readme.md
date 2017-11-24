@@ -21,6 +21,13 @@ you can find all interfaces like this
 ```bash
 ifconfig -a
 ```
+
+You will get something like this:
+
+>**eth0**  Link encap:Ethernet  HWaddr 54:04:a6:3f:49:fb  
+>          inet addr:192.168.100.196  Bcast:192.168.100.255  Mask:255.255.255.0
+
+
 and then found configuration file, ex
 /etc/sysconfig/network-scripts/ifcfg-**eth0**
 and just add to the end of this file line
