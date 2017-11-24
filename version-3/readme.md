@@ -29,7 +29,9 @@ You will get something like this:
 
 
 and then found configuration file, ex
-/etc/sysconfig/network-scripts/ifcfg-**eth0**
+
+>/etc/sysconfig/network-scripts/ifcfg-**eth0**
+
 and just add to the end of this file line
 ```bash
 ZONE=webserver
