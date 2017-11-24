@@ -86,7 +86,7 @@ yum_install () {
     printf "\"$1\" .. "
 
     if [ "`rpm -qa $1`" == "" ]; then
-    yum -y $1 >/dev/null 2>&1
+    yum install -y $1 >/dev/null 2>&1
         if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: " >&2; exit; fi
     else
         echo "ALREADY INSTALLED"
@@ -103,7 +103,7 @@ yum_ntd_install () {
     printf "\"$1\" .. "
 
     if [ "`rpm -qa $1`" == "" ]; then
-    yum -y $1 >/dev/null 2>&1
+    yum install -y $1 >/dev/null 2>&1
         if [ $? -eq 0 ]; then
             echo "OK";
         else
