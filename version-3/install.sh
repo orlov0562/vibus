@@ -460,7 +460,7 @@ if $CFG_YUM_INSTALL_PHP; then
 
     if $CFG_YUM_INSTALL_PHP_MODULES; then
         echo '- install php modules ..'
-        declare -a PHP_MODULES=("php-fpm" "php-mcrypt" "php-mbstring" "php-intl" "php-gd" "php-curl" "php-mysql" "php-pdo" "php-zip" "php-fileinfo" "php-xml" "php-pecl-imagick")
+        declare -a PHP_MODULES=("php-fpm" "php-mcrypt" "php-mbstring" "php-intl" "php-gd" "php-curl" "php-mysql" "php-pdo" "php-zip" "php-fileinfo" "php-xml" "php-pecl-imagick" "php-pecl-geoip")
         for PHP_MODULE in "${PHP_MODULES[@]}"; do yum_ntd_install $PHP_MODULE "  - "; done
     fi
 
