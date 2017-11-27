@@ -68,7 +68,7 @@ yum install php-mcrypt php-mbstring php-intl php-gd php-curl php-mysql php-pdo p
 ```
 так же добавляем другие необходимые зависимости
 ```bash
-yum install php-pecl-imagick
+yum install php-pecl-imagick php-pecl-geoip
 ```
 
 ## Настройка PHP-FPM
