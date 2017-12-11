@@ -97,17 +97,17 @@ AddDefaultCharset UTF-8
 
 EnableSendfile on
 
-IncludeOptional /opt/vibus/httpd/conf/*.conf
+IncludeOptional /opt/vibus/httpd/services/conf/*.conf
 ```
 создаем симлинк на наш конфиг в папку **/etc/httpd/conf**
 ```bash
-ln -s /opt/vibus/httpd/httpd.conf /etc/httpd/conf/
+ln -s /opt/vibus/services/httpd/httpd.conf /etc/httpd/conf/
 ```
 ## Настройка виртуального хоста по-умолчанию
 
 создаем файл конфигурации виртаульного хоста по-умолчанию
 ```bash
-mcedit /opt/vibus/httpd/conf/root-localhost.conf
+mcedit /opt/vibus/services/httpd/conf/root-localhost.conf
 ```
 с таким содержимым
 ```plain
