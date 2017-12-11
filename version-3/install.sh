@@ -199,6 +199,7 @@ if $CFG_CREATE_VIBUS_DIR_STRUCT; then
         mkdir -p /opt/vibus/services/php-fpm
         mkdir -p /opt/vibus/services/php-fpm/conf
         mkdir -p /opt/vibus/services/php-fpm/socks
+        mkdir -p /opt/vibus/services/php-fpm/pid
         mkdir -p /opt/vibus/services/php-fpm/logs
         mkdir -p /opt/vibus/services/php-fpm/vhosts
         echo '- php-fpm dir .. OK';
