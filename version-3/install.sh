@@ -531,6 +531,8 @@ fi
 
 if $CFG_YUM_INSTALL_MARIADB_SERVER; then
     if $CFG_MARIADB_SERVER_RUN_POSTINSTALL; then
+        STDERR="$(systemctl start mariadb 2>&1 > /dev/null)"
+        if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
         mysql_secure_installation
     fi
 fi
