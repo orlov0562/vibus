@@ -508,7 +508,7 @@ if $CFG_CREATE_HOSTNAME_DOMAIN_DIR; then
 
     chown -R vibus:vibus /opt/vibus/sites/vibus
     chmod -R 0550 /opt/vibus/sites/vibus/$DOMAIN/logs
-    chmod -R 0750 /opt/vibus/sites/vibus/$DOMAIN/{public_html,secret,session,tmp}
+    chmod -R 0770 /opt/vibus/sites/vibus/$DOMAIN/{public_html,secret,session,tmp}
 
 fi
 
