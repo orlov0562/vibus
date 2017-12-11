@@ -86,15 +86,16 @@ mcedit /opt/vibus/php-fpm/php-fpm.conf
 ```
 с таким содержимым
 ```plain
-include=/opt/vibus/php-fpm/conf/*.conf
+include=/opt/vibus/services/php-fpm/vhosts/*.conf
 
 [global]
-error_log = /opt/vibus/php-fpm/log/error.log
+pid = /opt/vibus/services/php-fpm/pid/php-fpm.pid
+error_log = /opt/vibus/services/php-fpm/logs/error.log
 daemonize = yes
 ```
 создаем симлинк на наш конфиг в папку /etc/httpd/conf
 ```bash
-ln -s /opt/vibus/php-fpm/php-fpm.conf /etc/
+ln -s /opt/vibus/services/php-fpm/php-fpm.conf /etc/
 ```
 
 ### Настройка PHP-FPM пула по-умолчанию
@@ -103,7 +104,7 @@ ln -s /opt/vibus/php-fpm/php-fpm.conf /etc/
 
 создаем файл конфигурации пула по-умолчанию
 ```bash
-mcedit /opt/vibus/php-fpm/conf/root-localhost.conf
+mcedit /opt/vibus/services/php-fpm/vhosts/root-localhost.conf
 ```
 с таким содержимым
 ```plain
@@ -116,7 +117,7 @@ mcedit /opt/vibus/php-fpm/conf/root-localhost.conf
 user = apache
 group = apache
 
-listen = /opt/vibus/php-fpm/sock/root-localhost.sock
+listen = /opt/vibus/service/php-fpm/socks/root-localhost.sock
 
 listen.owner = apache
 listen.group = apache
