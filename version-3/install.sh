@@ -36,7 +36,7 @@ CFG_VIBUS_CREATE_DIR_LOGROTATE=true
 CFG_YUM_INSTALL_FIREWALLD=true
 CFG_VIBUS_CREATE_DIR_FIREWALLD=true
 CFG_FIREWALLD_CREATE_SERVER_ZONE=true
-CFG_FIREWALLD_SKIP_INTERFACES_MODIFY=false
+CFG_FIREWALLD_SKIP_INTERFACES_MODIFY=true
 CFG_FIREWALLD_SET_SERVER_ZONE_AS_DEFAULT=true
 
 CFG_YUM_INSTALL_FAIL2BAN=true
@@ -50,6 +50,7 @@ CFG_YUM_INSTALL_CERTBOT=true
 CFG_VIBUS_CREATE_DIR_CERT=true
 
 CFG_YUM_INSTALL_MARIADB_SERVER=true
+CFG_MARIADB_SERVER_RUN_POSTINSTALL=true
 CFG_VIBUS_CREATE_DIR_MARIADB_SERVER=true
 
 CFG_YUM_INSTALL_VSFTPD=true
@@ -140,8 +141,8 @@ fi
 if $CFG_ADD_VIBUS_USER; then
     printf 'Add user "vibus" .. '
     if [ "`cat /etc/passwd | grep "^vibus"`" == "" ]; then
-        useradd vibus >/dev/null 2>&1
-        if [ $? -eq 0 ]; then echo "OK "; else echo "ERR #$?: " >&2; exit; fi
+        STDERR="$(useradd vibus 2>&1 > /dev/null)"
+        if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
     else
         echo "ALREADY EXISTS"
     fi
@@ -247,8 +248,8 @@ if $CFG_YUM_INSTALL_REMI_RELEASE; then
     printf 'Install "epel-release" repository ..'
 
     if [ "`rpm -qa epel-release`" == "" ]; then
-    yum -y --nogpgcheck install epel-release >/dev/null 2>&1
-        if [ $? -eq 0 ]; then echo "OK "; else echo "ERR #$?: " >&2; exit; fi
+        STDERR="$(yum -y --nogpgcheck install epel-release 2>&1 > /dev/null)"
+        if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
     else
         echo "ALREADY INSTALLED"
     fi
@@ -262,8 +263,8 @@ if $CFG_YUM_INSTALL_REMI_RELEASE; then
     printf 'Install "remi-release" repository ..'
 
     if [ "`rpm -qa remi-release`" == "" ]; then
-    yum -y --nogpgcheck install http://rpms.remirepo.net/enterprise/remi-release-7.rpm >/dev/null 2>&1
-        if [ $? -eq 0 ]; then echo "OK "; else echo "ERR #$?: " >&2; exit; fi
+        STDERR="$(yum -y --nogpgcheck install http://rpms.remirepo.net/enterprise/remi-release-7.rpm 2>&1 > /dev/null)"
+        if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
     else
         echo "ALREADY INSTALLED"
     fi
@@ -275,9 +276,8 @@ if $CFG_YUM_UPGRADE; then
 
     printf 'Upgrade installed packages .. '
 
-    yum -y upgrade >/dev/null 2>&1
-
-    if [ $? -eq 0 ]; then echo "OK "; else echo "ERR #$?: " >&2; exit; fi
+    STDERR="$(yum -y upgrade 2>&1 > /dev/null)"
+    if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
 
 fi
 
@@ -402,8 +402,6 @@ if $CFG_FIREWALLD_CREATE_SERVER_ZONE; then
         firewall-cmd --reload >/dev/null 2>&1
         echo "OK"
     fi
-
-
 fi
 
 # ------------------------------------------------
@@ -446,17 +444,15 @@ if $CFG_YUM_INSTALL_PHP; then
         yum_install "yum-utils" "- install "
 
         echo '- set default php to 7.2 ..'
-        yum-config-manager --enable remi-php72 >/dev/null 2>&1
-        if [ $? -eq 0 ]; then echo "  - OK "; else echo "  - ERR #$?: " >&2; exit; fi
+
+        STDERR="$(yum-config-manager --enable remi-php72 2>&1 > /dev/null)"
+        if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
 
         yum_install php "- install "
 
     else
-
         yum_install php
-
     fi
-
 
     if $CFG_YUM_INSTALL_PHP_MODULES; then
         echo '- install php modules ..'
@@ -476,9 +472,12 @@ if $CFG_YUM_INSTALL_LINKCHECKER; then
     yum_install python-devel "- install "
     yum_install gcc "- install "
 
-    pip install --upgrade pip >/dev/null 2>&1
-    pip install linkchecker >/dev/null 2>&1
-    if [ $? -eq 0 ]; then echo "- OK "; else echo "- ERR #$?: " >&2; exit; fi
+    STDERR="$(pip install --upgrade pip 2>&1 > /dev/null)"
+    if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
+
+    STDERR="$(pip install linkchecker 2>&1 > /dev/null)"
+    if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
+
 fi
 
 # ------------------------------------------------
@@ -489,8 +488,8 @@ if $CFG_ADD_APACHE_TO_VIBUS_GROUP; then
         echo 'ERR: Group "vibus" not found'
     else
         if [ "`cat /etc/group | grep "^vibus" | grep "apache"`" == "" ]; then
-            usermod -aG vibus apache >/dev/null 2>&1
-            if [ $? -eq 0 ]; then echo "OK "; else echo "ERR #$?: " >&2; exit; fi
+            STDERR="$(usermod -aG vibus apache 2>&1 > /dev/null)"
+            if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
         else
             echo "ALREADY IN GROUP"
         fi
@@ -508,7 +507,7 @@ if $CFG_CREATE_HOSTNAME_DOMAIN_DIR; then
     mkdir -p /opt/vibus/sites/vibus/$DOMAIN/tmp
 
     chown -R vibus:vibus /opt/vibus/sites/vibus
-    chmod -R 0660 /opt/vibus/sites/vibus/$DOMAIN/logs
+    chmod -R 0550 /opt/vibus/sites/vibus/$DOMAIN/logs
     chmod -R 0750 /opt/vibus/sites/vibus/$DOMAIN/{public_html,secret,session,tmp}
 
 fi
@@ -525,5 +524,13 @@ if $CFG_FIREWALLD_CREATE_SERVER_ZONE; then
         echo "!!! CONFIGURATION FILES THAT LOCATED HERE:"
         echo "!!! /etc/sysconfig/network-scripts/iface-{NAME}"
         echo "========================================================="
+    fi
+fi
+
+# ------------------------------------------------
+
+if $CFG_YUM_INSTALL_MARIADB_SERVER; then
+    if $CFG_MARIADB_SERVER_RUN_POSTINSTALL; then
+        mysql_secure_installation
     fi
 fi
