@@ -24,6 +24,16 @@ iptables -t mangle -F
 iptables -F
 iptables -X
 ```
+тоже самое одной командой
+```bash
+iptables -P INPUT ACCEPT && \
+iptables -P FORWARD ACCEPT && \
+iptables -P OUTPUT ACCEPT && \
+iptables -t nat -F && \
+iptables -t mangle -F && \
+iptables -F && \
+iptables -X
+```
 Проверяем, что все правила удалены
 ```bash
 iptables --line -vnL
