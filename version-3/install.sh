@@ -156,7 +156,7 @@ if $CFG_CREATE_VIBUS_DIR_STRUCT; then
 
     mkdir -p /opt/vibus
     chown root:vibus /opt/vibus
-    chmod 0750 /opt/vibus
+    chmod 0755 /opt/vibus
     echo '- vibus dir .. OK';
 
     if $CFG_VIBUS_CREATE_SITES_DIR; then
