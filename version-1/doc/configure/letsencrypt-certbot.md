@@ -76,7 +76,7 @@ certbot certonly --webroot \
 сертификаты будут сгенерированы тут **/etc/letsencrypt/**
 
 ### Настройка домена
-Для удобства создаем символическую ссылку на папку с сертивикатами в **/opt/vibus/services/httpd/cert**
+Для удобства создаем символическую ссылку на папку с сертификатами в **/opt/vibus/services/httpd/cert**
 
 ```bash
 ln -s /etc/letsencrypt/live/site.com /opt/vibus/cert/site.com
