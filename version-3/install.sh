@@ -489,7 +489,7 @@ if $CFG_ADD_APACHE_TO_VIBUS_GROUP; then
         echo 'ERR: Group "vibus" not found'
     else
         if [ "`cat /etc/group | grep "^vibus" | grep "apache"`" == "" ]; then
-            STDERR="$(usermod -aG vibus apache 2>&1 > /dev/null)"
+            STDERR="$(usermod -aG apache vibus 2>&1 > /dev/null)"
             if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
         else
             echo "ALREADY IN GROUP"
