@@ -74,7 +74,7 @@ yum upgrade
 ## Установка базового ПО
 Устанавливаем ПО, которое Вы постоянно используете (у вас может быть другой список)
 ```bash
-yum install wget curl ftp mc htop screen net-tools nmap telnet nano git composer
+yum install wget curl ftp mc htop screen bind-utils net-tools nmap telnet nano git composer
 ```
 
 ## Редактор по-умолчанию (например для крона)
