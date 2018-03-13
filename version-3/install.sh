@@ -15,6 +15,7 @@ CFG_YUM_INSTALL_WGET=true
 CFG_YUM_INSTALL_CURL=true
 CFG_YUM_INSTALL_HTOP=true
 CFG_YUM_INSTALL_SCREEN=true
+CFG_YUM_INSTALL_SMARTMONTOOLS=true
 CFG_YUM_INSTALL_NET_TOOLS=true
 CFG_YUM_INSTALL_BIND_UTILS=true
 CFG_YUM_INSTALL_NMAP=true
@@ -290,6 +291,7 @@ yum_if_install $CFG_YUM_INSTALL_WGET wget
 yum_if_install $CFG_YUM_INSTALL_CURL curl
 yum_if_install $CFG_YUM_INSTALL_HTOP htop
 yum_if_install $CFG_YUM_INSTALL_SCREEN screen
+yum_if_install $CFG_YUM_INSTALL_SMARTMONTOOLS smartmontools
 yum_if_install $CFG_YUM_INSTALL_NET_TOOLS net-tools
 yum_if_install $CFG_YUM_INSTALL_BIND_UTILS bind-utils
 yum_if_install $CFG_YUM_INSTALL_NMAP nmap
