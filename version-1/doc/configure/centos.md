@@ -173,3 +173,7 @@ yum install smartmontools
 ```bash
 smartctl -a /dev/sda | less
 ```
+Смотрим состояние рейд массива
+```bash
+cat /proc/mdstat
+```
