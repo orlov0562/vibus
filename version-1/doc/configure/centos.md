@@ -54,7 +54,25 @@ service network restart
 
 Если надо настроить статические ip (т.е. нет в сети dhcp), то читаем инструкцию [тут](https://lintut.com/how-to-configure-static-ip-address-on-centos-7/)
 
+## Настройка имени хоста
+```bash
+# Текущие настройки
+hostnamectl status
 
+# Установка полного имени
+hostnamectl server-name.domain.tld --static
+
+# Установка сокращеного имени (например, по-умолчанию используется для командной строки)
+hostnamectl server-name.domain.tld --pretty
+```
+При необходимости правим так же файл /etc/hosts
+```bash
+mcedit /etc/hosts
+```
+примерно так
+```plain
+xx.xx.xx.xx server-name.domain.tld www.server-name.domain.tld
+```
 ## SSH
 [Настройка SSH в CentOS](ssh.md)
 
