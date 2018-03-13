@@ -160,3 +160,16 @@ netstat -lntp | grep ":80"
 telnet localhost 443
 ```
 
+### Информация о дисках
+Посмотреть какие диски доступны в системе
+```bash
+ls /dev/sd*
+```
+Для просмотра информации нужен пакет smartmontools
+```bash
+yum install smartmontools
+```
+Смотрим информацию о конкретном диске
+```bash
+smartctl -a /dev/sda | less
+```
