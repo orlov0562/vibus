@@ -125,5 +125,17 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 ```bash
 systemctl restart httpd
 ```
+
+## Удаление сертификата и его зависимостей
+
+```bash
+certbot delete --cert-name www.site.com
+```
+Название сертификатов можно посмотреть так
+```bash
+ll /etc/letsencrypt/live
+```
+
 ## Полезные ссылки
 - [CertBot official site](https://certbot.eff.org/)
+
