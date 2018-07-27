@@ -24,6 +24,7 @@ CFG_YUM_INSTALL_NANO=true
 CFG_YUM_INSTALL_GIT=true
 CFG_YUM_INSTALL_COMPOSER=true
 CFG_YUM_INSTALL_LINKCHECKER=true
+CFG_YUM_INSTALL_POPPLER=true
 
 CFG_YUM_INSTALL_MC=true
 CFG_CONFIGURE_MC=true
@@ -484,6 +485,10 @@ if $CFG_YUM_INSTALL_LINKCHECKER; then
     if [ $? -eq 0 ]; then echo "OK"; else echo "ERR #$?: $STDERR"; exit; fi
 
 fi
+
+# ------------------------------------------------
+
+yum_if_install $CFG_YUM_INSTALL_POPPLER poppler-utils
 
 # ------------------------------------------------
 
