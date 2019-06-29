@@ -16,3 +16,9 @@ grep {username} /etc/passwd
 # Отключить шел пользователю
 usermod -s /sbin/nologin {username}
 ```
+
+### Права 0755 для папок, 0644 для файлов
+```bash
+find /opt/lampp/htdocs -type d -exec chmod 755 {} \;
+find /opt/lampp/htdocs -type f -exec chmod 644 {} \;
+```
