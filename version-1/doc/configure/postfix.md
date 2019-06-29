@@ -59,7 +59,14 @@ smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
 ```bash
 ln -s /opt/vibus/postfix/conf/main.cf /etc/postfix/conf/main.cf
 ```
-Смотрим текущий MTA, **с наибольшим** приоритетом
+Для Ubuntu смотрим текущий MTA так
+```bash
+telnet 127.0.0.1 25
+# введет что-то типа
+# 220 domain.tld ESMTP Postfix (Ubuntu)
+```
+
+Для CentOs cмотрим текущий MTA, **с наибольшим** приоритетом
 ```bash
 alternatives --display mta
 ```
@@ -234,3 +241,12 @@ update-alternatives -- install \
 --slave {ссылка-2} {имя-2} \
 --slave {ссылка-3} {имя-3} {файл-куда-ссылается-ссылка-3} \
 ```
+### Проверка отправки писем
+```bash
+mail -s "Local Outbound SMTP Test" ваш-email@gmail.com < /dev/null
+```
+возможно потребуется установить mailutils
+```bash
+apt install mailutils
+```
+Так же обратите внимание, что при отправке на gmail письмо с вероятностью 99% окажется в папке СПАМ, так что ищите его там
