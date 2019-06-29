@@ -4,6 +4,8 @@
 Устанавливаем **mariadb-server**
 ```bash
 yum install mariadb-server
+# или
+apt-get install mariadb-server
 ```
 создаем папку в vibus
 ```bash
@@ -68,6 +70,14 @@ systemctl start mariadb
 ```bash
 mysql_secure_installation
 ```
+
+при необходимости добавляем права для логина пользователя root
+```bash
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '<ВАШ-ПАРОЛЬ>';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' IDENTIFIED BY '<ВАШ-ПАРОЛЬ>';
+FLUSH PRIVILEGES;
+```
+
 опционально, тюнингуем конфигурацию с помощью Tuning скрипта. Описание [тут](http://www.day32.com/MySQL/)
 ```bash
 yum install bc
