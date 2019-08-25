@@ -138,3 +138,13 @@ Host ftp.site.com
   IdentityFile ~/.ssh/server-private-key
 ```
 после этого можно будет коннектится такой командой sftp ftp.site.com
+
+В случае проблем, надо попробовать законнектится со своей машины с включением детального лога
+```
+ssh -p 22 -i /path/to/private-key -vvv user@site.com
+sftp -p 22 -i /path/to/private-key -vvv user@site.com
+```
+на сервере логи соединений нужно искать в папке /var/log:
+```
+/var/log/auth.log
+```
