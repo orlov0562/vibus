@@ -45,6 +45,9 @@ mcedit ~/.ssh/config
 ```
 и добавляем туда записи в таком формате (в качестве хоста надо указывать адрес который вы будете передавать в ssh клиент:доменное имя или ip-адрес)
 ```bash
+TCPKeepAlive yes
+ServerAliveInterval 90
+
 Host site.com
   IdentityFile ~/.ssh/SERVERNAME
 
@@ -64,6 +67,11 @@ mcedit /etc/ssh/sshd_config
 ```
 с таким содержимым
 ```plain
+#Port 2222
+
+AllowUsers root
+DenyGroups no_sshgroup
+
 SyslogFacility AUTHPRIV
 PermitRootLogin without-password
 PubkeyAuthentication yes
@@ -72,7 +80,9 @@ PasswordAuthentication no
 ChallengeResponseAuthentication no
 UsePAM yes
 UseDNS no
-UsePrivilegeSeparation sandbox		# Default for new installations.
+LoginGraceTime 1m
+ClientAliveInterval 600
+ClientAliveCountMax 0
 
 # Accept locale-related environment variables
 AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
@@ -82,8 +92,29 @@ AcceptEnv XMODIFIERS
 
 # override default of no subsystems
 Subsystem	sftp	/usr/libexec/openssh/sftp-server
-DenyGroups no_sshgroup
 ```
+если планируем коннектится по sftp как www-data, надо добавить следующее
+```
+AllowUsers root www-data
+
+Match User www-data
+      ChrootDirectory /var/www/
+      ForceCommand internal-sftp
+      X11Forwarding no
+      AllowTcpForwarding no
+      PasswordAuthentication no
+```
+так же нужно добавить pub key в /var/www/.ssh/authorized_keys 
+```
+mkdir -p /var/www/.ssh
+chmod 0700 /var/www/.ssh
+chown www-data:www-data /var/www/.ssh
+touch /var/www/.ssh/authorized_keys 
+chmod 0600 /var/www/.ssh/authorized_keys 
+chown www-data:www-data /var/www/.ssh/authorized_keys 
+mcedit /var/www/.ssh/authorized_keys
+```
+
 сохраняем конфиг, перезапускаем sshd
 ```bash
 service sshd restart
@@ -94,3 +125,16 @@ cp /etc/ssh/sshd_config.orig /etc/sshd_config
 service sshd restart
 ```
 Если же авторизация по ключу прошла успешно, то разрываем ssh соединение по логину/паролю, и пробуем залогиниться. Должны получать ошибку.
+
+Для упрощения подключения к sftp на нашей машине, в папке ~/.ssh/config можем прописать alias-ы и дефолтные настройки
+```
+TCPKeepAlive yes
+ServerAliveInterval 90
+
+Host ftp.site.com
+  Hostname site.com
+  Port 2222
+  User www-data
+  IdentityFile ~/.ssh/server-private-key
+```
+после этого можно будет коннектится такой командой sftp ftp.site.com
