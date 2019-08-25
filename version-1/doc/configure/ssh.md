@@ -114,6 +114,11 @@ chmod 0600 /var/www/.ssh/authorized_keys
 chown www-data:www-data /var/www/.ssh/authorized_keys 
 mcedit /var/www/.ssh/authorized_keys
 ```
+добавлять именно в /var/www надо потмоу, что у пользователя www-data, эта папка является домашней, а в нашем конфиге поиск этого файла определен иммено там
+```
+$ cat /etc/passwd | grep www-data
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+```
 
 сохраняем конфиг, перезапускаем sshd
 ```bash
