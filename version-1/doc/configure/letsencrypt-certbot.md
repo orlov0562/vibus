@@ -52,6 +52,21 @@ crontab -e
 ```text
 0 0 * * * /usr/bin/certbot renew >/dev/null 2>&1
 ```
+### Перезагрузка веб-сервера
+При обновлении сертификата, веб-сервер не перезагружается автоматически и продолжает использовать старый сертификат.
+Чтобы перезагружать вебсервер, нужно добавить bash скрипт в папку renewal-hooks.
+Например, вот так
+```bash
+mcedit /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
+chmod +x /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
+```
+с таким содержимым
+```bash
+#! /bin/sh
+set -e
+/etc/init.d/nginx configtest
+/etc/init.d/nginx reload
+```
 
 ### Получение сертификата для домена
 
