@@ -40,7 +40,9 @@ Include conf.modules.d/*.conf
 
 ### Настройка nginx
 ```bash
-mkdir -p /var/www/example.com/.well-known
+mkdir -p /var/www/example.com/{.well-known,logs,public_html}
+# тестовый index.php
+# echo '<?php phpinfo();' > /var/www/example.com/public_html/index.php
 ```
 ```text
 server {
