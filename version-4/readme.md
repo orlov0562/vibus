@@ -9,7 +9,7 @@ dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 
 ## Установка и насройка базовых пакетов
 ```
-dnf install mc htop pv
+dnf install mc htop pv curl wget
 ```
 
 Настройка редактора по-умолчанию
