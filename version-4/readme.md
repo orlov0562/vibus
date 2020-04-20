@@ -137,12 +137,15 @@ crontab -e
 чтобы certbot перезапускал nginx, надо добавить хуки
 ```
 mcedit /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
-chmod +x /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
+
 
 #! /bin/sh
 set -e
 nginx -t
 nginx -s reload
+
+
+chmod +x /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
 ```
 ** "set -e" = [Exit immediately if a command exits with a non-zero status](http://linuxcommand.org/lc3_man_pages/seth.html)
 
