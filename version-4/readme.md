@@ -123,9 +123,76 @@ chown www-data:root /var/log/php-fpm
 
 ## Установка Letsencrypt
 ```
-cd ~
-mkdir -p Temp && cd Temp
+cd /tmp
 wget https://dl.eff.org/certbot-auto
-chmod +x certbot-auto
-./certbot-auto --nginx
+mv ./certbot-auto /usr/bin/certbot
+chmod +x /usr/bin/certbot
+```
+и добавляем в крон
+```
+crontab -e
+
+0 0 * * * /usr/bin/certbot renew >/dev/null 2>&1
+```
+чтобы certbot перезапускал nginx, надо добавить хуки
+```
+mcedit /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
+chmod +x /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
+
+#! /bin/sh
+set -e
+/etc/init.d/nginx configtest
+/etc/init.d/nginx reload
+```
+
+в случае новой конфигурации, можем добавить домен и конфиги в nginx в авто режиме
+```
+/usr/bin/certbot --nginx
+```
+или сгенерировать сертификат вручную
+```
+certbot certonly --webroot \
+-w /opt/vibus/sites/user/site.com/public_html \
+-d www.site.com \
+-d site.com
+```
+и конфигурирование nginx-а
+```
+    server {
+        server_name my-site.com www.my-site.com;
+        root        /var/www/my-site.com/public_html/web;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        listen [::]:443 ssl ipv6only=on;
+        listen 443 ssl;
+        ssl_certificate /etc/letsencrypt/live/my-site.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/my-site.com/privkey.pem;
+        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+        location / {
+            index index.php;
+            try_files $uri $uri/ index.php;
+        }
+    }
+```
+при необходимости добавляем редиректы с http на https
+```
+    server {
+        if ($host = www.my-site.com) {
+            return 301 https://$host$request_uri;
+        }
+
+        if ($host = my-site.com) {
+            return 301 https://$host$request_uri;
+        }
+
+        listen       80 ;
+        listen       [::]:80 ;
+        server_name my-site.com www.my-site.com;
+        return 404;
+    }
 ```
