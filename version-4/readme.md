@@ -21,7 +21,7 @@ export VISUAL="mcedit"
 export EDITOR="mcedit"
 ```
 
-## отключение SELinux
+## Отключение SELinux
 ```
 mcedit /etc/sysconfig/selinux
 
@@ -118,4 +118,5 @@ dnf install nginx
 dnf module enable php:remi-7.4
 dnf install php php-cli php-common php-fpm php-pdo php-mysqlnd php-xml php-imap php-intl php-json php-bcmath php-mbstring
 systemctl disable httpd
+chown www-data:root /var/log/php-fpm
 ```
