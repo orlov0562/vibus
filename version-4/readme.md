@@ -111,6 +111,7 @@ chown -R www-data:www-data /var/www/.ssh
 ## Установка Nginx
 ```
 dnf install nginx
+systemctl enable nginx
 ```
 
 ## Установка PHP
@@ -119,6 +120,7 @@ dnf module enable php:remi-7.4
 dnf install php php-cli php-common php-fpm php-pdo php-mysqlnd php-xml php-imap php-intl php-json php-bcmath php-mbstring
 systemctl disable httpd
 chown www-data:root /var/log/php-fpm
+systemctl enable php-fpm
 ```
 
 ## Установка Letsencrypt
