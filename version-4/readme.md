@@ -141,8 +141,7 @@ chmod +x /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
 
 #! /bin/sh
 set -e
-/etc/init.d/nginx configtest
-/etc/init.d/nginx reload
+nginx -t && nginx -s reload
 ```
 
 в случае новой конфигурации, можем добавить домен и конфиги в nginx в авто режиме
