@@ -141,8 +141,11 @@ chmod +x /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
 
 #! /bin/sh
 set -e
-nginx -t && nginx -s reload
+nginx -t
+nginx -s reload
 ```
+** "set -e" = [http://linuxcommand.org/lc3_man_pages/seth.html](Exit immediately if a command exits with a non-zero status)
+
 
 в случае новой конфигурации, можем добавить домен и конфиги в nginx в авто режиме
 ```
