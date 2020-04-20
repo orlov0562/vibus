@@ -120,3 +120,12 @@ dnf install php php-cli php-common php-fpm php-pdo php-mysqlnd php-xml php-imap 
 systemctl disable httpd
 chown www-data:root /var/log/php-fpm
 ```
+
+## Установка Letsencrypt
+```
+cd ~
+mkdir -p Temp && cd Temp
+wget https://dl.eff.org/certbot-auto
+chmod +x certbot-auto
+./certbot-auto --nginx
+```
