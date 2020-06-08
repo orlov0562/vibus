@@ -78,10 +78,11 @@ xx.xx.xx.xx server-name.domain.tld www.server-name.domain.tld
 
 ## Настройка репозиториев и обновление ПО
 
-Для использования свежего PHP, добавляем Remi репозиторий
+Для использования свежего PHP, добавляем Epel и Remi репозиторий
 
 ```bash
-yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 ```
 
 обновляемся
@@ -92,7 +93,18 @@ yum upgrade
 ## Установка базового ПО
 Устанавливаем ПО, которое Вы постоянно используете (у вас может быть другой список)
 ```bash
-yum install wget curl ftp mc htop screen bind-utils net-tools nmap telnet nano git composer
+dnf install wget curl ftp mc htop screen bind-utils net-tools nmap telnet nano git composer
+```
+
+## Кодировка
+При попытке установить пакеты выскочит ошибка кодировки по-умолчанию
+```bash
+Failed to set locale, defaulting to C.UTF-8
+```
+Чтобы это исправить выполняекм следующие команды
+```bash
+localectl set-locale LANG=en_US.UTF-8
+dnf install langpacks-en glibc-all-langpacks -y
 ```
 
 ## Редактор по-умолчанию (например для крона)
