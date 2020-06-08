@@ -97,6 +97,11 @@ Match User www-data
 Для логина нам понадобится паблик ключ, в папке пользователя www-data (см. ниже)
 
 ## Создание пользователя www-data
+Создаем пользователя www-data, группы www-data. Домашний каталог пользователя /var/www. Shell отключен.
+```
+useradd -d/var/www -s/sbin/nologin www-dat
+```
+другой вариант создания/модификации:
 ```
 useradd www-data
 usermod -d /var/www www-data
