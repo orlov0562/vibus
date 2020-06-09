@@ -99,7 +99,7 @@ Match User www-data
 ## Создание пользователя www-data
 Создаем пользователя www-data, группы www-data. Домашний каталог пользователя /var/www. Shell отключен.
 ```
-useradd -d/var/www -s/sbin/nologin www-dat
+useradd -d/var/www -s/sbin/nologin www-data
 ```
 другой вариант создания/модификации:
 ```
@@ -139,7 +139,7 @@ chown www-data:root -R /var/lib/nginx
 ## Установка PHP
 ```
 dnf module enable php:remi-7.4
-dnf install php php-cli php-common php-fpm php-pdo php-mysqlnd php-xml php-imap php-intl php-json php-bcmath php-mbstring
+dnf install php php-cli php-common php-fpm php-pdo php-mysqlnd php-xml php-imap php-intl php-json php-bcmath php-mbstring php-pecl-geoip php-pecl-imagick
 systemctl disable httpd
 chown www-data:root /var/log/php-fpm
 systemctl enable php-fpm
@@ -172,7 +172,19 @@ crontab -e
 
 0 0 * * * /usr/bin/certbot renew >/dev/null 2>&1
 ```
-чтобы certbot перезапускал nginx, надо добавить хуки
+в случае новой конфигурации, можем добавить домен и конфиги в nginx в авто режиме
+```
+/usr/bin/certbot --nginx
+```
+или сгенерировать сертификат вручную
+```
+certbot certonly --webroot \
+-w /opt/vibus/sites/user/site.com/public_html \
+-d www.site.com \
+-d site.com
+```
+
+Чтобы certbot перезапускал nginx, надо добавить хуки
 ```
 mcedit /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
 
@@ -188,17 +200,6 @@ chmod +x /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
 ** "set -e" = [Exit immediately if a command exits with a non-zero status](http://linuxcommand.org/lc3_man_pages/seth.html)
 
 
-в случае новой конфигурации, можем добавить домен и конфиги в nginx в авто режиме
-```
-/usr/bin/certbot --nginx
-```
-или сгенерировать сертификат вручную
-```
-certbot certonly --webroot \
--w /opt/vibus/sites/user/site.com/public_html \
--d www.site.com \
--d site.com
-```
 и конфигурирование nginx-а
 ```
     server {
