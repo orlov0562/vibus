@@ -189,7 +189,7 @@ certbot certonly --webroot \
 mcedit /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
 
 
-#! /bin/sh
+#!/bin/sh
 set -e
 nginx -t
 nginx -s reload
