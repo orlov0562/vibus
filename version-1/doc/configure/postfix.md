@@ -307,6 +307,7 @@ ALL указывает на то, что делать в случае, если 
 - https://www.youtube.com/watch?v=y1XUATxYuiY
 - https://stackoverflow.com/questions/19142369/create-both-ipv4-and-ipv6-spf-record
 - https://www.youtube.com/watch?v=xUTmwcSDvSE
+- https://www.dmosk.ru/instruktions.php?object=postfix-centos
 - Проверка: https://mxtoolbox.com
 
 - DKIM: https://www.linuxtechi.com/configure-domainkeys-with-postfix-on-centos-7/
