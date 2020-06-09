@@ -131,7 +131,6 @@ http {
     ...
 }
 ```
-
 далее меняем владельца временной папки
 ```
 chown www-data:root -R /var/lib/nginx
