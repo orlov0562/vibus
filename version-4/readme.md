@@ -118,6 +118,24 @@ chown -R www-data:www-data /var/www/.ssh
 dnf install nginx
 systemctl enable nginx
 ```
+если планируем, что nginx будет работать от www-data пользователя, меняем user в nginx.conf
+```
+nano /etc/nginx/nginx.conf
+
+user www-data;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+...
+http {
+    ...
+}
+```
+
+далее меняем владельца временной папки
+```
+chown www-data:root -R /var/lib/nginx
+```
 
 ## Установка PHP
 ```
@@ -127,6 +145,20 @@ systemctl disable httpd
 chown www-data:root /var/log/php-fpm
 systemctl enable php-fpm
 ```
+если планируем, что php-fpm будет работать от www-data пользователя, меняем user в www.conf
+```
+nano /etc/php-fpm.d/www.conf
+...
+user = www-data
+group = www-data
+
+listen.owner = www-data
+listen.group = www-data
+;listen.mode = 0660
+
+;listen.acl_users = apache,nginx
+```
+listen.acl_users = надо закомментировать иначе владелец сокета не будет изменен
 
 ## Установка Letsencrypt
 ```
