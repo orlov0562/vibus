@@ -250,3 +250,23 @@ mail -s "Local Outbound SMTP Test" ваш-email@gmail.com < /dev/null
 apt install mailutils
 ```
 Так же обратите внимание, что при отправке на gmail письмо с вероятностью 99% окажется в папке СПАМ, так что ищите его там
+
+### Настройка DNS записей
+
+SPF = TXT запись в DNS, в которой указываются ip-адреса скоторых можно отправлять почту для данного домена.
+```
+TYPE: TXT
+HOST: @
+ANSWER: v=spf1 ip6:2b02:4f8:161:2353::2 ip6:2b02:4f8:160:6352::2 ip4:8.8.96.89 ip4:8.8.62.108 -all 
+```
+Ограничение длинны записи 255 символов. Можно указывать несколько ipv4, ipv6 адресов. 
+ALL указывает на то, что делать в случае, если домен не соответствует указанным ip:
+- -all = Означает, что сервер (отправитель) не распознан и письмо должно быть отклонено.
+- ~all = Означает, что сервер (отправитель) не распознан и письмо нужно поместить в Спам.
+- +all = Означает, что любой сервер (отправитель) может отправлять, даже если его нет в SPF. НЕ РЕКОМЕНДУЕТСЯ.
+
+### Использованные ресурсы
+- https://www.smartertools.com/blog/2019/04/09-understanding-spf-dkim-dmarc
+- https://www.youtube.com/watch?v=vrE4d8Qozc0&list=PLHHm04DXWzeLZPU8yhlJ4osBlfZVOpbmz
+- https://www.youtube.com/watch?v=y1XUATxYuiY
+- https://stackoverflow.com/questions/19142369/create-both-ipv4-and-ipv6-spf-record
