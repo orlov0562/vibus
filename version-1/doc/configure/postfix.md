@@ -270,3 +270,4 @@ ALL указывает на то, что делать в случае, если 
 - https://www.youtube.com/watch?v=vrE4d8Qozc0&list=PLHHm04DXWzeLZPU8yhlJ4osBlfZVOpbmz
 - https://www.youtube.com/watch?v=y1XUATxYuiY
 - https://stackoverflow.com/questions/19142369/create-both-ipv4-and-ipv6-spf-record
+- Проверка: https://mxtoolbox.com
