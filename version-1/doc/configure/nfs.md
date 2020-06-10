@@ -152,40 +152,6 @@ ping -s 32768 10.20.20.8
 ```
 Если время пинга будет в пределах 1-2 мс, тогда можно смело использовать это значение.
 
-## Тестирование скорости
-
-Чтобы узнать скорость сети, запускаем на сервере (10.20.20.8) прослушку порта
-```bash
-nc -l 1122 > /dev/null
-```
-Далее на клиенте
-```bash
-dd if=/dev/zero bs=9100004096 count=1 | nc 10.20.20.8 1122
-```
-В результате видим, что-то вроде
-```bash
-0+1 records in
-0+1 records out
-2147479552 bytes (2.1 GB, 2.0 GiB) copied, 18.4269 s, 117 MB/s
-```
-тут 117 MB/s скорость сети, 117 MB/s это 0,9 Гб/с - ожидаемо для 1 Гб/с сети
-
-Теперь создаем 1Gb файл на сервере в папке nfs
-```bash
-fallocate -l 1G test.img
-```
-переходим на клиент и копируем его вот так
-```bash
-dd if=/mnt/shared-disk-1 of=/dev/null status=progress
-```
-в результате видим скорость копирования через NFS и можем сравнить относитлеьно скорости сети
-```bash
-# dd if=/mnt/shared-disk-1/test.img of=/dev/null status=progress
-2097152+0 records in
-2097152+0 records out
-1073741824 bytes (1.1 GB, 1.0 GiB) copied, 9.21474 s, 117 MB/s
-```
-
 ### Mount options (English)
 
 Manual mount
@@ -304,6 +270,41 @@ nfs-server:/archiv-big   /archivs/archiv-big    nfs     [options]               
 – Forces a newly created file in the mounted file system to inherit the group ID of the parent directory.
 – By default, a newly created file inherits the effective group ID of the calling process, unless the GID bit is set on the parent directory. If the GID bit is set, the new file inherits the group ID of the parent directory.
 – The default value is not set for this parameter.
+
+## Тестирование скорости
+
+Чтобы узнать скорость сети, запускаем на сервере (10.20.20.8) прослушку порта
+```bash
+nc -l 1122 > /dev/null
+```
+Далее на клиенте
+```bash
+dd if=/dev/zero bs=9100004096 count=1 | nc 10.20.20.8 1122
+```
+В результате видим, что-то вроде
+```bash
+0+1 records in
+0+1 records out
+2147479552 bytes (2.1 GB, 2.0 GiB) copied, 18.4269 s, 117 MB/s
+```
+тут 117 MB/s скорость сети, 117 MB/s это 0,9 Гб/с - ожидаемо для 1 Гб/с сети
+
+Теперь создаем 1Gb файл на сервере в папке nfs
+```bash
+fallocate -l 1G test.img
+```
+переходим на клиент и копируем его вот так
+```bash
+dd if=/mnt/shared-disk-1 of=/dev/null status=progress
+```
+в результате видим скорость копирования через NFS и можем сравнить относитлеьно скорости сети
+```bash
+# dd if=/mnt/shared-disk-1/test.img of=/dev/null status=progress
+2097152+0 records in
+2097152+0 records out
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 9.21474 s, 117 MB/s
+```
+
 
 ## Использованные материалы
 - http://www.k-max.name/linux/network-file-system-nfs/
