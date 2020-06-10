@@ -31,6 +31,12 @@ mkdir -p /mnt/disk-1/nfs
 * 10.20.20.9/24 - подсеть из которой разрешен доступ
 * и/или 10.20.20.10 - ip с которого разрешен доступ
 * в скобках указаны параметры доступа
+  * rw – права на запись в каталоге, ro – доступ только на чтение;
+  * sync – синхронный режим доступа. async – подразумевает, что не нужно ожидать подтверждения записи на диск (повышает производительность NFS, но уменьшает надежность);
+  * no_root_squash – разрешает root пользователю с клиента получать доступ к NFS каталогу (обычно не рекомендуется);
+  * no_all_squash — включение авторизации пользователя. all_squash – доступ к ресурсам от анонимного пользователя;
+  * no_subtree_check – отключить проверку, что пользователь обращается в файлу в определенном каталоге (subtree_check – используется по умолчанию);
+  * anonuid, anongid – сопоставить NFS пользователю/группу указанному локальному пользователю/группе(UID и GID).
 
 После того как добавили в файл, применяем конфигурацию
 ```bash
@@ -155,3 +161,4 @@ dd if=/mnt/shared-disk-1 of=/dev/null status=progress
 - http://www.k-max.name/linux/network-file-system-nfs/
 - https://www.tecmint.com/install-nfs-server-on-centos-8/
 - https://www.gotoadm.ru/centos-nfs-server-install/
+- https://winitpro.ru/index.php/2020/06/05/ustanovka-nastrojka-nfs-servera-i-klienta-linux/
