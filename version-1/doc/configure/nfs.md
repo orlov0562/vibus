@@ -59,11 +59,22 @@ exportfs  -s
 
 при необходимости открываем порты файрвола
 ```bash
+firewall-cmd --permanent --add-port=111/tcp
+firewall-cmd --permanent --add-port=20048/tcp
 firewall-cmd --permanent --add-service=nfs
 firewall-cmd --permanent --add-service=rpc-bind
 firewall-cmd --permanent --add-service=mountd
 firewall-cmd --reload
 ```
+для iptables
+```bash
+iptables -t filter -A INPUT -p tcp --dport 111 -j ACCEPT
+iptables -t filter -A INPUT -p tcp --dport 2049 -j ACCEPT
+iptables -t filter -A INPUT -p tcp --dport 20048 -j ACCEPT
+service iptables save
+service iptables restart
+```
+
 ### Настройка клиента
 
 Устанавливаем необходимые пакеты
