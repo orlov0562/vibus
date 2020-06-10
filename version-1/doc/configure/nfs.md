@@ -104,6 +104,35 @@ nano /etc/fstab
 archiv:/archiv-small     /archivs/archiv-small  nfs     rw,timeo=4,rsize=16384,wsize=16384   0       0
 nfs-server:/archiv-big   /archivs/archiv-big    nfs     rw,timeo=50,hard,fg                  0       0
 ```
+
+Я использовал такие опции, чтобы если отвалится сервер, скрипты выполняющиеся на клиенте не были заблокированы.
+```
+mount -t nfs -o rw,rsize=16384,wsize=16384,bg,soft,intr,retrans=3,timeo=10 server.ip:/mnt/disk-1/nfs /mnt/shared-disk-1
+```
+fstab
+```
+nfs-server:/archiv-big   /archivs/archiv-big    nfs     rw,rsize=16384,wsize=16384,bg,soft,intr,retrans=3,timeo=10                  0       0
+```
+С такими опциями, скрипты получат i/o ошибку через 30 секунд. Пример на PHP
+```
+<?php
+echo file_get_contents('/mnt/shared-disk-1/mounted.flag');
+```
+далее останавливаем сервер
+```
+systemctl start nfs-server
+```
+а на клиенте выполянем скрипт и получаем ошибку
+```
+$ time php test.php 
+
+PHP Warning:  file_get_contents(/mnt/shared-disk-1/mounted.flag): failed to open stream: Input/output error in /root/test/test.php on line 3
+
+real	0m30.114s
+user	0m0.017s
+sys	0m0.006s
+```
+
 Следующие опции управляют действиями NFS при отсутствии ответа от сервера или в случае возникновения ошибок ввода/вывода:
 - fg (bg) (foreground - передний план, background - задний план) - Производить попытки монтирования отказавшей NFS на переднем плане/в фоне.
 - hard (soft) - выводит на консоль сообщение "server not responding" при достижении таймаута и продолжает попытки монтирования. При заданной опции soft - при таймауте сообщает вызвавшей операцию программе об ошибке ввода/вывода. (опцию soft советуют не использовать)
