@@ -131,9 +131,13 @@ http {
     ...
 }
 ```
-далее меняем владельца временной папки
+далее меняем владельца временной папки (по-умолчанию, там владелец apache)
 ```
 chown www-data:root -R /var/lib/nginx
+```
+и папки логов (по-умолчанию, там владелец apache)
+```
+chown www-data:root -R /var/log/nginx
 ```
 
 ## Установка PHP
@@ -158,6 +162,53 @@ listen.group = www-data
 ;listen.acl_users = apache,nginx
 ```
 listen.acl_users = надо закомментировать иначе владелец сокета не будет изменен
+
+
+далее меняем владельца папки логов (по-умолчанию, там владелец apache)
+```
+chown www-data:root -R /var/log/php-fpm
+```
+
+## Logrotate
+
+/etc/logrotate/php-fpm
+```
+/var/log/php-fpm/*log 
+/var/www/*/logs/php-fpm-*.log
+{
+    daily
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 0640 www-data root
+    su root www-data
+    sharedscripts
+    postrotate
+	/bin/kill -SIGUSR1 `cat /run/php-fpm/php-fpm.pid 2>/dev/null` 2>/dev/null || true
+    endscript
+}
+```
+
+/etc/logrotate/nginx
+```
+/var/log/nginx/*log 
+/var/www/*/logs/nginx-*.log
+{
+    daily
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 0640 www-data root
+    su root www-data
+    sharedscripts
+    postrotate
+        /bin/kill -USR1 `cat /run/nginx.pid 2>/dev/null` 2>/dev/null || true
+    endscript
+```
 
 ## Установка Letsencrypt
 ```
