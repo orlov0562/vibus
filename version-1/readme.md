@@ -23,6 +23,7 @@
 - [VSFTPD (FTP)](doc/configure/vsftpd.md)
 - [NFS](doc/configure/nfs.md)
 - [Postfix (MTA)](doc/configure/postfix.md)
+- [Startifdown](doc/configure/startifdown.md)
 - [Проверка настройки PHP](doc/configure/check-php.md)
 - [Настройка нового пользователя](doc/configure/new-user.md)
 - [Настройка крона](doc/configure/cron.md)
