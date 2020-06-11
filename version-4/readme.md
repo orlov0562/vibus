@@ -182,7 +182,7 @@ chown www-data:root -R /var/log/php-fpm
     compress
     delaycompress
     notifempty
-    create 0640 www-data root
+    create 0640 www-data adm
     su root www-data
     sharedscripts
     postrotate
@@ -202,7 +202,7 @@ chown www-data:root -R /var/log/php-fpm
     compress
     delaycompress
     notifempty
-    create 0640 www-data root
+    create 0640 www-data adm
     su root www-data
     sharedscripts
     postrotate
