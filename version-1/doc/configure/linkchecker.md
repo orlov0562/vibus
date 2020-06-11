@@ -18,6 +18,13 @@ This program requires Python requests 2.2.0 or later.
 pip install requests==2.9.2
 ```
 
+# Instalation on CentOS 8
+
+```bash
+dnf install python2-pip python2-devel gcc
+pip2.7 install --upgrade pip
+pip2.7 install linkchecker
+```
 
 # Run with timeout from cli example
 
