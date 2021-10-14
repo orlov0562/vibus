@@ -22,7 +22,7 @@ systemctl status nfs-server
 ```bash
 mkdir -p /mnt/disk-1/nfs
 ```
-Добавляем созданную папку в файл конфигурации /var/exports
+Добавляем созданную папку в файл конфигурации /etc/exports
 ```bash
 /mnt/disk-1/nfs				10.20.20.9/24(rw,sync,no_all_squash,no_root_squash)
 /mnt/disk-2/nfs				10.20.20.10(rw,sync)
