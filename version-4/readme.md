@@ -154,7 +154,7 @@ chown www-data:root -R /var/log/nginx
 ## Установка PHP
 ```
 dnf module enable php:remi-7.4
-dnf install php php-cli php-common php-fpm php-pdo php-mysqlnd php-xml php-imap php-intl php-json php-bcmath php-mbstring php-pecl-geoip php-pecl-imagick
+dnf install php php-cli php-common php-fpm php-pdo php-mysqlnd php-xml php-imap php-intl php-json php-bcmath php-mbstring php-pecl-geoip php-pecl-imagick php-redis
 systemctl disable httpd
 chown www-data:root /var/log/php-fpm
 systemctl enable php-fpm
@@ -353,4 +353,13 @@ firewall-cmd --permanent --new-zone=redis
 firewall-cmd --permanent --zone=redis --add-port=6379/tcp
 firewall-cmd --permanent --zone=redis --add-source=client_server_private_IP
 firewall-cmd --reload
+```
+если необходимо подключить сессии php в редис, то в конфиге php прописываем ip адрес, порт и номер базы редиса
+```
+nano /etc/php-fpm.d/www.conf
+...
+;php_value[session.save_handler] = files
+;php_value[session.save_path]    = /var/www/$pool/session
+php_value[session.save_handler]  = redis
+php_value[session.save_path]     = "tcp://192.168.0.10:6379?database=10"
 ```
