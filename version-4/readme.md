@@ -182,7 +182,7 @@ chown www-data:root -R /var/log/php-fpm
 
 ## Logrotate
 
-/etc/logrotate/php-fpm
+/etc/logrotate.d/php-fpm
 ```
 /var/log/php-fpm/*log 
 /var/www/*/logs/php-fpm-*.log
@@ -202,7 +202,7 @@ chown www-data:root -R /var/log/php-fpm
 }
 ```
 
-/etc/logrotate/nginx
+/etc/logrotate.d/nginx
 ```
 /var/log/nginx/*log 
 /var/www/*/logs/nginx-*.log
