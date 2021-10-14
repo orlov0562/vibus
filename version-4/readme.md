@@ -336,7 +336,7 @@ port 16379
 указываем режим очистки и сколько памяти можно использовать (в байтах)
 ```
 maxmemory 1500000000
-maxmemory-policy volatile-lfu
+maxmemory-policy allkeys-lru
 ```
 добавляем пароль
 ```
