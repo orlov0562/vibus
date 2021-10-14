@@ -7,7 +7,7 @@ dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.r
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 ```
 
-## Установка и насройка базовых пакетов
+## Установка и настройка базовых пакетов
 ```
 dnf install mc htop pv curl wget
 ```
@@ -290,4 +290,49 @@ chmod +x /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
         server_name my-site.com www.my-site.com;
         return 404;
     }
+```
+	
+## Установка Redis
+```
+dnf install redis
+```
+
+Редактируем конфигурацию
+```
+nano /etc/redis.conf
+```
+меняем тип запуска
+```
+# If you run Redis from upstart or systemd, Redis can interact with your
+# supervision tree. Options:
+#   supervised no      - no supervision interaction
+#   supervised upstart - signal upstart by putting Redis into SIGSTOP mode
+#   supervised systemd - signal systemd by writing READY=1 to $NOTIFY_SOCKET
+#   supervised auto    - detect upstart or systemd method based on
+#                        UPSTART_JOB or NOTIFY_SOCKET environment variables
+# Note: these supervision methods only signal "process is ready."
+#       They do not enable continuous liveness pings back to your supervisor.
+supervised systemd
+```
+и интерфейсы на которых будет работать
+```
+bind 127.0.0.1 10.0.0.4
+```
+при необходимости меняем дефолтный порт 6379 
+```
+port 16379
+```
+и добавляем пароль
+```
+requirepass SOME-STRONG-PASSWORD
+```
+запускаем и добавляем в автозагрузку
+````
+systemctl start redis
+systemctl enable redis
+````
+проверяем
+```
+redis-cli ping
+PONG
 ```
