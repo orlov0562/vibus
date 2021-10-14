@@ -336,3 +336,10 @@ systemctl enable redis
 redis-cli ping
 PONG
 ```
+если необходимо, то защищаем подключение с помощью файрвола
+```
+firewall-cmd --permanent --new-zone=redis
+firewall-cmd --permanent --zone=redis --add-port=6379/tcp
+firewall-cmd --permanent --zone=redis --add-source=client_server_private_IP
+firewall-cmd --reload
+```
