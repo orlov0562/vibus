@@ -21,6 +21,17 @@ export VISUAL="mcedit"
 export EDITOR="mcedit"
 ```
 
+## Устанавливаем паки локалей
+```
+dnf install langpacks-en glibc-all-langpacks -y
+localectl set-locale LANG=en_US.UTF-8
+```
+это уберет ошибку
+```
+Failed to set locale, defaulting to C.UTF-8
+```
+
+
 ## Отключение SELinux
 ```
 mcedit /etc/sysconfig/selinux
