@@ -395,13 +395,13 @@ Hostname = node-01.site.com                       - имя ноды на кот�
 
 Zabbix Modes Schema
 ```
-	              Zabbix Server requests                      Agent connects to Zabbix  
-	              data via TCP 10050                          server via TCP 10051
-[               ] <----------------------- [                ] <----------------------- [              ]
-[ Passive agent ]                          [  Zabbix Server ]                          [ Active agent ]
-[               ] -----------------------> [                ] <----------------------- [              ]
-	              Agent respond with                          Agent pushes data via
-	              the value                                   TCP 10051
+	            Zabbix Server requests                     Agent connects to Zabbix
+	            data via TCP 10050                         server via TCP 10051
+[===============] <----------------------- [===============] <----------------------- [==============]
+[ Passive agent ]                          [ Zabbix Server ]                          [ Active agent ]
+[===============] -----------------------> [===============] <----------------------- [==============]
+	            Agent respond with                         Agent pushes data via
+	            the value                                  TCP 10051
 ```
 										       
 После того как конфигурация настроена, добавляем соответствующий хост в Zabbix сервер и запускаем агента
