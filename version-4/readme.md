@@ -407,7 +407,7 @@ Zabbix Modes Schema
 После того как конфигурация настроена, добавляем соответствующий хост в Zabbix сервер и запускаем агента
 
 ```
-systemclt start zabbix-agent
+systemctl start zabbix-agent
 ```
 проверяем что в логах все в порядке
 ```
