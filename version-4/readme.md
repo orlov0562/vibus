@@ -400,7 +400,7 @@ Zabbix Modes Schema
 [===============] <----------------------- [===============] <----------------------- [==============]
 [ Passive agent ]                          [ Zabbix Server ]                          [ Active agent ]
 [===============] -----------------------> [===============] <----------------------- [==============]
-	            Agent respond with                         Agent pushes data via
+	            Agent responds with                        Agent pushes data via
 	            the value                                  TCP 10051
 ```
 										       
