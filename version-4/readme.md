@@ -368,3 +368,38 @@ nano /etc/php-fpm.d/www.conf
 php_value[session.save_handler]  = redis
 php_value[session.save_path]     = "tcp://192.168.0.10:6379?database=10"
 ```
+
+## Установка Zabbix Agent
+- https://www.zabbix.com/ru/download?zabbix=6.0&os_distribution=centos&os_version=8&db=mysql&ws=nginx
+
+```
+rpm -Uvh https://repo.zabbix.com/zabbix/5.5/rhel/8/x86_64/zabbix-release-5.5-1.el8.noarch.rpm
+dnf clean all
+dnf install zabbix-agent
+systemctl enable zabbix-agent
+```
+Редактируем конфигурацию
+```
+nano /etc/zabbix/zabbix_agentd.conf
+
+# Passive mode  - не меняем если выбрали Active Mode
+Server=zabbix.site.com                            - адрес Zabbix сервера откуда будут приходить запросы
+ListenPort=10050                                  - порт на который будут приходить запросы
+StartAgents=3                                     - кол-во дочерних процессов агента, которые будут слушать порт
+	                                                если указано 0, то Passive Mode отключен
+	
+# Active mode - не меняем если выбрали Passive Mode
+ServerActive=zabbix.site.com:10051                - адрес и порт Zabbix сервера (если пустой то, Active Mode отключен)
+Hostname = node-01.site.com                       - имя ноды на которой находится агент, должно соответствовать существующей конфигурации
+```
+
+Zabbix Modes Schema
+```
+	              Zabbix Server requests                      Agent connects to Zabbix  
+	              data via TCP 10050                          server via TCP 10051
+[               ] <----------------------- [                ] <----------------------- [              ]
+[ Passive agent ]                          [  Zabbix Server ]                          [ Active agent ]
+[               ] -----------------------> [                ] <----------------------- [              ]
+	              Agent respond with                          Agent pushes data via
+	              the value                                   TCP 10051
+```
