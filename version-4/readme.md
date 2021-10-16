@@ -403,3 +403,13 @@ Zabbix Modes Schema
 	              Agent respond with                          Agent pushes data via
 	              the value                                   TCP 10051
 ```
+										       
+После того как конфигурация настроена, добавляем соответствующий хост в Zabbix сервер и запускаем агента
+
+```
+systemclt start zabbix-agent
+```
+проверяем что в логах все в порядке
+```
+tail /var/log/zabbix/zabbix_agentd.log
+```
