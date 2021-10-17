@@ -2,6 +2,12 @@
 - site: http://wummel.github.io/linkchecker/index.html
 - main: http://wummel.github.io/linkchecker/man1/linkchecker.1.html
 
+# Installation on CentOS 8
+```bash
+dnf install python3-pip
+pip3 install git+https://github.com/linkchecker/linkchecker.git
+```
+
 # Instalation on CentOS 7
 
 ```bash
