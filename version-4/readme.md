@@ -106,6 +106,8 @@ Match User www-data
       PasswordAuthentication no
 ```
 Для логина нам понадобится паблик ключ, в папке пользователя www-data (см. ниже)
+	
+Логи по ошибкам подключения SSH можно посмотреть тут: /var/log/secure
 
 ## Создание пользователя www-data
 Создаем пользователя www-data, группы www-data. Домашний каталог пользователя /var/www. Shell отключен.
@@ -124,7 +126,7 @@ cp -R /root/.ssh /var/www/
 chown -R www-data:www-data /var/www/.ssh
 ```
 
-Если планируем логиниться по sftp и включен ChrootDirectory, то нужно поменять пользователя и права на папку /var/www, т.к.
+Если включен ChrootDirectory, то нужно поменять пользователя и права на папку /var/www, т.к.
 > ChrootDirectory
 > Specifies the pathname of a directory to chroot(2) to after authentication. All components of the pathname must be root-owned directories that are not writable by any other user or group. After the chroot, sshd(8) changes the working directory to the user's home directory.
 
@@ -133,9 +135,6 @@ chown -R www-data:www-data /var/www/.ssh
 chown root:root /var/www
 chmod 0755 /var/www
 ```
-
-Логи по ошибкам подключения SSH можно посмотреть тут: /var/log/secure
-
 	
 ## Установка Nginx
 ```
