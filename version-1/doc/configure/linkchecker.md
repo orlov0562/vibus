@@ -7,6 +7,14 @@
 dnf install python3-pip
 pip3 install git+https://github.com/linkchecker/linkchecker.git
 ```
+Если планируется запуск от www-data и домашняя папка (например /var/www) находится в Chroot (принадлежит root пользователю), то нужно создать подпапки и дать им права на запись
+```
+mkdir -p /var/www/.local/share/linkchecker/plugins
+chown -R www-data:www-data /var/www/.local
+
+mkdir -p /var/www/.config/linkchecker/linkcheckerrc
+chown -R www-data:www-data /var/www/.config
+```
 
 # Instalation on CentOS 7
 
