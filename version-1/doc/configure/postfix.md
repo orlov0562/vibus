@@ -301,6 +301,25 @@ ALL указывает на то, что делать в случае, если 
 - ~all = Означает, что сервер (отправитель) не распознан и письмо нужно поместить в Спам.
 - +all = Означает, что любой сервер (отправитель) может отправлять, даже если его нет в SPF. НЕ РЕКОМЕНДУЕТСЯ.
 
+### Проверка отправки email
+Простой вариант
+```
+[server]$ /usr/sbin/sendmail youremail@example.com
+Subject: Test Send Mail
+Hello World
+control d (this key combination of control key and d will finish the email.)
+```
+Расширенный вариант
+```
+[server]$ /usr/sbin/sendmail youremail@example.com
+To: differentemail@example.com
+From: anyone@example.com
+Subject: Test Send Mail
+Hello World
+control d (this key combination will finish the email.)
+```
+
+
 ### Использованные ресурсы
 - https://www.smartertools.com/blog/2019/04/09-understanding-spf-dkim-dmarc
 - https://www.youtube.com/watch?v=vrE4d8Qozc0&list=PLHHm04DXWzeLZPU8yhlJ4osBlfZVOpbmz
@@ -311,3 +330,4 @@ ALL указывает на то, что делать в случае, если 
 - Проверка: https://mxtoolbox.com
 
 - DKIM: https://www.linuxtechi.com/configure-domainkeys-with-postfix-on-centos-7/
+
