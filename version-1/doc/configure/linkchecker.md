@@ -15,6 +15,26 @@ chown -R www-data:www-data /var/www/.local
 mkdir -p /var/www/.config/linkchecker/linkcheckerrc
 chown -R www-data:www-data /var/www/.config
 ```
+# Installation on Ubuntu
+```bash
+pip3 install git+https://github.com/linkchecker/linkchecker.git
+```
+При запуске от обычного пользователя установится всего скорее вот сюда: ~/.local/bin/linkchecker
+При необходимости добавляем в PATH
+```bash
+nano ~/.bashrc
+```
+добавляем в конец
+```
+...
+export PATH="${PATH}:/home/YOUR-USERNAME/.local/bin"
+```
+и применяем к текущей сессии
+```bash
+source ~/.bashrc
+```
+
+Если сразу не заработает, попробуйте закрыть и открыть терминал, чтобы перезапустить сессию
 
 # Instalation on CentOS 7
 
