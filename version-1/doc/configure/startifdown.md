@@ -27,6 +27,9 @@ EMAIL_FROM="no-reply@server.name"
 EMAIL_SUBJECT="Startifdown: Service restored on $SERVER_NAME"
 EMAIL_TEXT="$DATE Service restored"
 
+TG_SEND="yes"
+TG_NOTIFY="php /root/scripts/startifdown/tg-notify.php"
+
 CHECK_NGINX="yes"
 CHECK_PHP_FPM="yes"
 CHECK_MARIADB="yes"
@@ -48,6 +51,9 @@ if [ "$CHECK_NGINX" == "yes" ]; then
 	    EMAIL_TEXT="$DATE - Nginx down, started"
 	    echo -e "Subject: $EMAIL_SUBJECT\nFrom: $EMAIL_FROM\nTo: $EMAIL_TO\n\n$EMAIL_TEXT" | $SENDMAIL -t
         fi
+	if [ "$TG_SEND" == "yes" ]; then
+           $TG_NOTIFY "Nginx"
+        fi
     else
 	echo "- OK"
     fi
@@ -65,6 +71,9 @@ if [ "$CHECK_PHP_FPM" == "yes" ]; then
 	    EMAIL_TEXT="$DATE - PHP-FPM down, started"
 	    echo -e "Subject: $EMAIL_SUBJECT\nFrom: $EMAIL_FROM\nTo: $EMAIL_TO\n\n$EMAIL_TEXT" | $SENDMAIL -t
 	fi
+        if [ "$TG_SEND" == "yes" ]; then
+            $TG_NOTIFY "PHP-FPM"
+        fi
     else
 	echo "- OK"
     fi
@@ -82,6 +91,9 @@ if [ "$CHECK_MARIADB" == "yes" ]; then
 	    EMAIL_TEXT="$DATE - Mariadb down, started"
 	    echo -e "Subject: $EMAIL_SUBJECT\nFrom: $EMAIL_FROM\nTo: $EMAIL_TO\n\n$EMAIL_TEXT" | $SENDMAIL -t
 	fi
+	if [ "$TG_SEND" == "yes" ]; then
+            $TG_NOTIFY "MariaDB"
+        fi
     else
 	echo "- OK"
     fi
@@ -106,6 +118,44 @@ if [ "$CHECK_REDIS" == "yes" ]; then
     fi
 fi
 ```
+
+### Если вклоючена отправка в телеграмм нужно создать и настроить tg-notify.php
+```
+<?php
+
+define('TELEGRAM_TOKEN', '<ваш-телеграм-токен>');
+define('TELEGRAM_CHATID', '<ваш-telegram-chat-id>');
+
+function message_to_telegram($text)
+{
+    $ch = curl_init();
+    curl_setopt_array(
+        $ch,
+        array(
+            CURLOPT_URL => 'https://api.telegram.org/bot' . TELEGRAM_TOKEN . '/sendMessage',
+            CURLOPT_POST => TRUE,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_POSTFIELDS => array(
+                'chat_id' => TELEGRAM_CHATID,
+                'text' => $text,
+            ),
+        )
+    );
+    curl_exec($ch);
+}
+
+$serviceName = trim($argv[1]) ? trim($argv[1]) : 'Service';
+
+$msg = 'Server server.name'.PHP_EOL
+       .'ERROR: '.$serviceName.' was restarted by StartIfDown'.PHP_EOL
+;
+echo $msg;
+
+message_to_telegram($msg);
+
+```
+
 ### Cron
 Добавляем скрипт в крон для запуска каждую минуту
 ```
