@@ -30,6 +30,7 @@ EMAIL_TEXT="$DATE Service restored"
 CHECK_NGINX="yes"
 CHECK_PHP_FPM="yes"
 CHECK_MARIADB="yes"
+CHECK_REDIS="yes"
 
 mkdir -p `dirname $LOG` && touch $LOG
 
@@ -83,6 +84,25 @@ if [ "$CHECK_MARIADB" == "yes" ]; then
 	fi
     else
 	echo "- OK"
+    fi
+fi
+
+if [ "$CHECK_REDIS" == "yes" ]; then
+    echo "Check Redis.."
+    ps -ef | grep redis | grep -v grep > /dev/null
+    if [ $? != 0 ]; then
+        echo "- Service down, started.."
+        systemctl start redis > /dev/null
+        echo $DATE "- Redis down, started" >> $LOG
+        if [ "$EMAIL_SEND" == "yes" ]; then
+            EMAIL_TEXT="$DATE - Redis down, started"
+            echo -e "Subject: $EMAIL_SUBJECT\nFrom: $EMAIL_FROM\nTo: $EMAIL_TO\n\n$EMAIL_TEXT" | $SENDMAIL -t
+        fi
+	if [ "$TG_SEND" == "yes" ]; then
+           $TG_NOTIFY "Redis"
+        fi
+    else
+        echo "- OK"
     fi
 fi
 ```
