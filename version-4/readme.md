@@ -425,3 +425,84 @@ systemctl start zabbix-agent
 ```
 tail /var/log/zabbix/zabbix_agentd.log
 ```
+
+## Отключение IPv6
+
+Проверка IPv6
+```
+$ ping site.com
+PING site.com(2a01:3f8:b05:1000::2 (2a01:3f8:b05:1000::2)) 56 data bytes
+^C
+
+$ nslookup site.com
+Server:		213.233.100.100
+Address:	213.233.100.100#53
+
+Non-authoritative answer:
+Name:	site.com
+Address: 71.47.2.81
+Name:	site.com
+Address: 2a01:3f8:b05:1000::2
+
+$ ping6 2a01:3f8:b05:1000::2
+PING 2a01:3f8:b05:1000::2(2a01:3f8:b05:1000::2) 56 data bytes
+^C
+
+$ traceroute6  2a01:3f8:b05:1000::2
+traceroute to 2a01:3f8:b05:1000::2 (2a01:3f8:b05:1000::2), 30 hops max, 80 byte packets
+ 1  * * *
+ 2  * * *
+ 3  * * *
+ 4  * * *
+ 5  * * *
+
+$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp4s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether c8:60:00:7d:cc:6f brd ff:ff:ff:ff:ff:ff
+    inet 251.9.60.18/32 scope global noprefixroute enp4s0
+       valid_lft forever preferred_lft forever
+    inet6 2a01:3f8:061:6352::2/64 scope global noprefixroute 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::cb60:ff:fa8d:bb6f/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+```
+
+Отключаем IPv6, так после ребута он работает, но спустя какое-то время отваливается.
+```
+nano /etc/sysctl.conf
+```
+добавляем
+```
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+```
+сохраняем и применяем
+```
+sysctl -p
+```
+проверяем, и видим что IPv6 больше не используются
+```
+$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp4s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether c8:60:00:7d:cc:6f brd ff:ff:ff:ff:ff:ff
+    inet 251.9.60.18/32 scope global noprefixroute enp4s0
+       valid_lft forever preferred_lft forever
+
+$ ping site.com
+PING site.com (71.47.2.81) 56(84) bytes of data.
+64 bytes from site.com (71.47.2.81): icmp_seq=1 ttl=61 time=0.258 ms
+64 bytes from site.com (71.47.2.81): icmp_seq=2 ttl=61 time=0.302 ms
+```
