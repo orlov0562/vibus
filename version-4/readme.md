@@ -1,10 +1,10 @@
-# Конфигурация VPS на CentOS 8
+# Конфигурация VPS на CentOS 9
 
 ## Обновление и добавление репозиториев
 ```
 dnf update -y
-dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+dnf install https://rpms.remirepo.net/enterprise/remi-release-9.rpm
 ```
 
 ## Установка и настройка базовых пакетов
@@ -505,4 +505,28 @@ $ ping site.com
 PING site.com (71.47.2.81) 56(84) bytes of data.
 64 bytes from site.com (71.47.2.81): icmp_seq=1 ttl=61 time=0.258 ms
 64 bytes from site.com (71.47.2.81): icmp_seq=2 ttl=61 time=0.302 ms
+```
+
+## Load Balancer - Draft
+
+Basic balancing of HTTP with nginx
+```
+http {
+    upstream site_com {
+        server 10.0.0.2:8080;
+        server 10.0.0.3:8080;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://site_com;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
 ```
