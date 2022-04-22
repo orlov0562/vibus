@@ -511,6 +511,8 @@ PING site.com (71.47.2.81) 56(84) bytes of data.
 
 Basic balancing of HTTP with nginx
 ```
+/etc/nginx/nginx.conf
+
 http {
     upstream site_com {
         server 10.0.0.2:8080;
