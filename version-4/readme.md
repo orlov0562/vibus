@@ -256,6 +256,23 @@ certbot certonly --webroot \
 -w /opt/vibus/sites/user/site.com/public_html \
 -d www.site.com \
 -d site.com
+
+# если .well-known прописан в nginx как
+# location ^~ /.well-known {
+#     default_type "text/plain";
+#     root /var/www/site.com;
+#     try_files $uri =404;
+# }
+#
+# то в web-root надо указывать папку домена  
+#
+# certbot certonly --webroot \
+# -w /var/www/site.com \
+# -d site.com \
+# -d www.site.com
+# 
+# challenge будет сгенерирован в
+# /var/www/site.com/.well-known/acme-challenge/Gx1iMjsN5E7qiZAMR6E8TBmyITx
 ```
 
 Чтобы certbot перезапускал nginx, надо добавить хуки
