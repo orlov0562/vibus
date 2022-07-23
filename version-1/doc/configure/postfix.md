@@ -329,11 +329,11 @@ control d (this key combination will finish the email.)
 /var/log# tail -n 50 mail.log
 ```
 вот такая ошибка лечится добавлением TXT записи для домена "your-domain.com" (обратите внимание, что это может быть домен не сайта, а сервера)
-```
-Jul 23 16:19:56 your-domain postfix/smtp[16929]: 382BCDE96A: to=<some-user@gmail.com>, relay=gmail-smtp-in.l.google.com[74.125.133.26]:25, delay=0.26, delays=0.03/0.01/0.05/0.18, dsn=5.7.1, status=bounced (host gmail-smtp-in.l.google.com[74.125.133.26] said: 550-5.7.1 [116.203.92.102      12] Our system has detected that this message is 550-5.7.1 likely unsolicited mail. To reduce the amount of spam sent to Gmail, 550-5.7.1 this message has been blocked. Please visit 550-5.7.1  https://support.google.com/mail/?p=UnsolicitedMessageError 550 5.7.1  for more information. a9-20020a05600c348900b003a1a0fb35easi8822006wmq.159 - gsmtp (in reply to end of DATA command))
 
-Jul 23 16:19:56 your-domain postfix/cleanup[16927]: 7A26ADE9CC: message-id=<20220723131956.7A26ADE9CC@your-domain.com>
-```
+> Jul 23 16:19:56 your-domain postfix/smtp[16929]: 382BCDE96A: to=<some-user@gmail.com>, relay=gmail-smtp-in.l.google.com[74.125.133.26]:25, delay=0.26, delays=0.03/0.01/0.05/0.18, dsn=5.7.1, status=bounced (host gmail-smtp-in.l.google.com[74.125.133.26] said: 550-5.7.1 [116.203.92.102      12] Our system has detected that this message is 550-5.7.1 likely unsolicited mail. To reduce the amount of spam sent to Gmail, 550-5.7.1 this message has been blocked. Please visit 550-5.7.1  https://support.google.com/mail/?p=UnsolicitedMessageError 550 5.7.1  for more information. a9-20020a05600c348900b003a1a0fb35easi8822006wmq.159 - gsmtp (in reply to end of DATA command))
+>
+> Jul 23 16:19:56 your-domain postfix/cleanup[16927]: 7A26ADE9CC: message-id=<20220723131956.7A26ADE9CC@your-domain.com>
+
 
 ### Использованные ресурсы
 - https://www.smartertools.com/blog/2019/04/09-understanding-spf-dkim-dmarc
