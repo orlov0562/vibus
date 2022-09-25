@@ -524,6 +524,40 @@ PING site.com (71.47.2.81) 56(84) bytes of data.
 64 bytes from site.com (71.47.2.81): icmp_seq=2 ttl=61 time=0.302 ms
 ```
 
+## Установка Docker
+- https://docs.docker.com/engine/install/centos/
+- https://github.com/docker/compose/releases
+```
+ yum install -y yum-utils
+
+ yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+    
+yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+systemctl enable docker
+systemctl start docker
+
+curl -L "https://github.com/docker/compose/releases/download/v2.11.1/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+docker version
+docker-compose version
+```
+## Установка Portainer
+- https://docs.portainer.io/v/ce-2.9/start/install/server/docker/linux
+```
+docker volume create portainer_data
+
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
+    --restart=always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v portainer_data:/data \
+    portainer/portainer-ce:2.9.3
+
+```
+
 ## Load Balancer - Draft
 
 Basic balancing of HTTP with nginx
