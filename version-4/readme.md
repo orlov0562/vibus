@@ -558,7 +558,7 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
 
 ```
 
-## Load Balancer - Draft
+## Load Balancer
 
 Basic balancing of HTTP with nginx
 ```
@@ -580,6 +580,56 @@ http {
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
         }
+    }
+}
+```
+
+Stream balancing of HTTPS with nginx
+ - stream = root элемент, по типу http
+```
+stream {
+
+   log_format basic '$remote_addr [$time_local] '
+                     '$protocol $status $bytes_sent $bytes_received '
+                     '$session_time "$upstream_addr" '
+                     '"$upstream_bytes_sent" "$upstream_bytes_received" "$upstream_connect_time"';
+
+   access_log /var/log/nginx/stream-access.log basic;
+   error_log  /var/log/nginx/stream-error.log;
+
+   # Configuration
+   # https://docs.nginx.com/nginx/admin-guide/load-balancer/tcp-udp-load-balancer/
+   # https://docs.nginx.com/nginx/admin-guide/load-balancer/tcp-health-check/
+
+   upstream site_com_443 {
+       server 10.10.10.1:443  max_fails=3 fail_timeout=60s;   # fe-node-01
+       server 10.10.10.2:443  max_fails=3 fail_timeout=60s;   # fe-node-02
+       server 10.10.10.3:443  max_fails=3 fail_timeout=60s;   # fe-node-03
+       server 10.10.10.4:443  max_fails=3 fail_timeout=60s;   # fe-node-04
+   }
+
+   upstream site_com_80 {
+       server 10.10.10.5:80  max_fails=3 fail_timeout=60s;   # fe-node-01
+       server 10.10.10.6:80  max_fails=3 fail_timeout=60s;   # fe-node-02
+       server 10.10.10.7:80  max_fails=3 fail_timeout=60s;   # fe-node-03
+       server 10.10.10.8:80  max_fails=3 fail_timeout=60s;   # fe-node-04
+   }
+
+   server {
+        listen                443;
+        proxy_pass            site_com_443;
+        proxy_next_upstream   on;
+        proxy_protocol        on;  # должен быть так же включен на upstream ноде
+        proxy_timeout         5s;
+        proxy_connect_timeout 3s;
+    }
+
+    server {
+        listen                80;
+        proxy_pass            site_com_80;
+        proxy_protocol        on;
+        proxy_timeout         5s;
+        proxy_connect_timeout 3s;
     }
 }
 ```
