@@ -1,10 +1,16 @@
-# Конфигурация VPS на CentOS 9
+# Конфигурация VPS на CentOS 8/9
 
 ## Обновление и добавление репозиториев
 ```
 dnf update -y
 dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 dnf install https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+```
+или
+```
+dnf update -y
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 ```
 
 ## Установка и настройка базовых пакетов
