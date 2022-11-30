@@ -618,7 +618,7 @@ stream {
    server {
         listen                443;
         proxy_pass            site_com_443;
-        proxy_next_upstream   on;
+        proxy_next_upstream   on;  # повторный запрос с другой ноды, в случа если первая зафейлилась
         proxy_protocol        on;  # должен быть так же включен на upstream ноде
         proxy_timeout         5s;
         proxy_connect_timeout 3s;
