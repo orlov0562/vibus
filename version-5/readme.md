@@ -1,7 +1,7 @@
-Shinjiru [DRAFT]
+# Shinjiru [DRAFT]
 
 By default Firewalld turned On and only 80 (HTTP) and SSH port enabled.
-<code>
+```
   # firewall-cmd --state
 running
   
@@ -24,11 +24,11 @@ public (active)
 # firewall-cmd --get-active-zones
 public
   interfaces: venet0
-</code>
+```
 
 To turn on HTTPS you need to enable it manually
 
-<code>
+```
 # firewall-cmd --zone=public --permanent --add-service=https
 success
     
@@ -50,4 +50,4 @@ public (active)
   source-ports: 
   icmp-blocks: 
   rich rules: 
-</code>
+```
