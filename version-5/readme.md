@@ -60,6 +60,12 @@ firewall-cmd --permanent --add-rich-rule="rule family='ipv4' source address='xxx
 firewall-cmd --list-rich-rules 
 ```
 
+Remove IP from blacklist
+```
+firewall-cmd --permanent --remove-rich-rule="rule family='ipv4' source address='xxx.xxx.xxx.xxx' reject"
+firewall-cmd --list-rich-rules
+```
+
 Block IP with mask
 ```
 firewall-cmd --permanent --zone=drop --add-source=xxx.xxx.xxx.0/24
