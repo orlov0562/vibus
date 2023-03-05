@@ -640,3 +640,12 @@ stream {
     }
 }
 ```
+
+В случае ошибки
+```
+nginx: [emerg] unknown directive "stream" in /etc/nginx/nginx.conf:17
+```
+нужно доставить модуль nginx-mod-stream
+```
+dnf install nginx-mod-stream
+```
